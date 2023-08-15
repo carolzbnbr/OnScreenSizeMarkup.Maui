@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using OnScreenSizeMarkup.Maui.Categories;
 using OnScreenSizeMarkup.Maui.Providers;
 

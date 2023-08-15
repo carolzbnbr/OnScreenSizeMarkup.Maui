@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using OnScreenSizeMarkup.Maui.Categories;
 using OnScreenSizeMarkup.Maui.Extensions;
 
@@ -20,4 +21,3 @@ public static class DefaultMappings
 		new SizeMappingInfo(200.0, ScreenCategories.ExtraLarge, ScreenSizeCompareModes.SmallerOrEqualsTo),
 	};
 }
-

@@ -1,3 +1,5 @@
+using System;
+
 namespace OnScreenSizeMarkup.Maui.Helpers;
 
 #pragma warning disable IDE0040 // Add accessibility modifiers

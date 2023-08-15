@@ -24,6 +24,8 @@
   <ItemGroup>
     <InternalsVisibleTo Include="OnScreenSizeMarkup.Maui.Tests" />
     <InternalsVisibleTo Include="Samples" />
+    <InternalsVisibleTo Include="OnScreenSizeMarkup.Maui.Tests" />
+   
   </ItemGroup>
   
   <PropertyGroup>
