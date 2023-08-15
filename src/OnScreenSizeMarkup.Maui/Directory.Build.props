@@ -1,5 +1,51 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <Project>
+
+  <PropertyGroup>
+    <GitInfoReportImportance>high</GitInfoReportImportance>
+    <PackageId>OnScreenSizeMarkup.Maui</PackageId>
+    <Summary>OnScreenSizeMarkup.Maui: A XAML markup extension for controlling UI Views according to the device's screen size category (Medium, Large, etc)</Summary>
+
+
+    <NeutralLanguage>en</NeutralLanguage>
+    <Product>OnScreenSizeMarkup.Maui (net6.0)</Product>
+    <Copyright>© Ana Carolina Zambon. All rights reserved.</Copyright>
+    <DefineConstants>$(DefineConstants);</DefineConstants>
+    <UseFullSemVerForNuGet>false</UseFullSemVerForNuGet>
+    <Title>OnScreenSizeMarkup.Maui</Title>
+    
+    <Product>$(AssemblyName) ($(TargetFramework))</Product>
+    <AssemblyVersion>3.0.0.1</AssemblyVersion>
+    <AssemblyFileVersion>3.0.0.1</AssemblyFileVersion>
+    <Version>3.0.0</Version>
+    <PackageVersion>$(Version)$(VersionSuffix)</PackageVersion>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    
+    <Configurations>Debug;Release</Configurations>
+  </PropertyGroup>
+
+  
+  
+  <PropertyGroup>
+    <TargetFrameworks>net6.0</TargetFrameworks>
+    <MicrosoftExtensionsVersion>6.0.0</MicrosoftExtensionsVersion>
+    <Authors>Ana Carolina Zambon</Authors>
+    <Owners>carolzbnbr</Owners>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <DisableExtraReferences>False</DisableExtraReferences>
+    <Description>OnScreenSizeMarkup: A XAML markup extension for controlling UI Views according to the device's screen size category (Medium, Large, etc)</Description>
+    <Product>$(AssemblyName) ($(TargetFramework))</Product>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/carolzbnbr/OnScreenSizeMarkup.Maui</PackageProjectUrl>
+<!--    <PackageIcon>icon.png</PackageIcon>-->
+    <PackageTags>screen, size, dynamic, adapt, adaptative, markup, onscreensize, onsize, onwindow, maui, height, width, heightrequest, widthrequest</PackageTags>
+    <RepositoryUrl>https://github.com/carolzbnbr/OnScreenSizeMarkup.Maui</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
+<!--    <PackageReadmeFile>readme.md</PackageReadmeFile>-->
+  </PropertyGroup>
+  
   <PropertyGroup>
     <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
