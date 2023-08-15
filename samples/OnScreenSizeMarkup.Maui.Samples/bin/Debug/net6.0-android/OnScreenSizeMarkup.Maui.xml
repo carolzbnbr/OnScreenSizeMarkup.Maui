@@ -1,0 +1,511 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>OnScreenSizeMarkup.Maui</name>
+    </assembly>
+    <members>
+        <member name="T:OnScreenSizeMarkup.Maui.Categories.IScreenCategorizer">
+            <summary>
+            Responsible for identify the screen size of the device model on either device name or device screen dimensions.
+            </summary>
+        </member>
+        <member name="T:OnScreenSizeMarkup.Maui.Categories.LogLevels">
+            <summary>
+            Level of detail of the debug/logging messages.
+            </summary>
+        </member>
+        <member name="F:OnScreenSizeMarkup.Maui.Categories.LogLevels.Verbose">
+            <summary>
+            Most detailed log messages
+            </summary>
+        </member>
+        <member name="F:OnScreenSizeMarkup.Maui.Categories.LogLevels.Info">
+            <summary>
+            Informational log messages
+            </summary>
+        </member>
+        <member name="T:OnScreenSizeMarkup.Maui.Categories.ScreenCategories">
+            <summary>
+            Categories that a device screen size fits in.
+            </summary>
+        </member>
+        <member name="F:OnScreenSizeMarkup.Maui.Categories.ScreenCategories.ExtraSmall">
+            <summary>
+            Extra Small sized screens
+            </summary>
+        </member>
+        <member name="F:OnScreenSizeMarkup.Maui.Categories.ScreenCategories.Small">
+            <summary>
+            Small sized screens
+            </summary>
+        </member>
+        <member name="F:OnScreenSizeMarkup.Maui.Categories.ScreenCategories.Medium">
+            <summary>
+            Medium size screens
+            </summary>
+        </member>
+        <member name="F:OnScreenSizeMarkup.Maui.Categories.ScreenCategories.Large">
+            <summary>
+            Large sized screens
+            </summary>
+        </member>
+        <member name="F:OnScreenSizeMarkup.Maui.Categories.ScreenCategories.ExtraLarge">
+            <summary>
+            Extra Large sized screens
+            </summary>
+        </member>
+        <member name="F:OnScreenSizeMarkup.Maui.Categories.ScreenCategories.NotSet">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:OnScreenSizeMarkup.Maui.Categories.ScreenCategorizer">
+            <summary>
+            Responsible for categorizing the device's actual screen size to <see cref="T:OnScreenSizeMarkup.Maui.Categories.ScreenCategories"/> based on <see cref="P:OnScreenSizeMarkup.Maui.Manager.Mappings"/>
+            </summary>
+        </member>
+        <member name="M:OnScreenSizeMarkup.Maui.Categories.ScreenCategorizer.TryCategorizeByFixedSize(System.Collections.Generic.List{OnScreenSizeMarkup.Maui.Mappings.SizeMappingInfo},System.Double,OnScreenSizeMarkup.Maui.Categories.ScreenCategories@)">
+            <summary>
+            Attempt to categorize a screen based on fixed mapping screen size. 
+            </summary>
+            <param name="mappings"></param>
+            <param name="deviceActualDiagonalSize"></param>
+            <param name="category"></param>
+            <returns></returns>
+        </member>
+        <member name="T:OnScreenSizeMarkup.Maui.ConfigureServices">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:OnScreenSizeMarkup.Maui.ConfigureServices.IsRegistered">
+            <summary>
+            Determina se houve ou não registro uso de injecao de dependencia.
+            </summary>
+        </member>
+        <member name="M:OnScreenSizeMarkup.Maui.ConfigureServices.AddOnScreenSize(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Register the library's services for dependency injection.
+            </summary>
+            <example>
+            Sample code on how to register this library on your MauiProgram's class:
+            <code>
+            <![CDATA[
+            public static class MauiProgram
+            {
+            		public static MauiApp CreateMauiApp()
+            		{
+            			var builder = MauiApp.CreateBuilder();
+            			builder
+            				.UseMauiApp<App>()
+            				.ConfigureFonts(fonts =>
+            				{
+            					fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
+            					fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+            				});
+            
+            			builder.Services.AddOnScreenSize();  // Add this line
+            			...
+            			return builder.Build();
+            		}
+            }
+            ]]>
+            </code>
+            </example>
+            <param name="services"></param>
+            <returns></returns>
+        </member>
+        <member name="M:OnScreenSizeMarkup.Maui.Extensions.ValueConversionExtensions.ConvertTo(System.Object,System.Type,Microsoft.Maui.Controls.BindableProperty)">
+            <summary>
+            Attempts to convert <paramref name="value"/> to <paramref name="toType"/>.
+            </summary>
+            <param name="value">A XAML user-defined Value for current <see cref="T:OnScreenSizeMarkup.Maui.Categories.ScreenCategories"/> a device fits in.</param>
+            <param name="toType"></param>
+            <param name="bindableProperty"></param>
+            <returns></returns>
+        </member>
+        <member name="T:OnScreenSizeMarkup.Maui.OnScreenSizeExtension">
+            <summary>
+            Markup extension that allows specify values to be applied to a physical screen size according to the category
+            the screen it fits in, such as ExtraSmall, Small, Medium, Large, ExtraLarge, or Default.
+            </summary>
+        </member>
+        <member name="M:OnScreenSizeMarkup.Maui.OnScreenSizeExtension.#ctor">
+            <summary>
+            Xaml internal usage
+            </summary>
+        </member>
+        <member name="P:OnScreenSizeMarkup.Maui.OnScreenSizeExtension.FallbackType">
+            <summary>
+            Gets or sets the fallback <see cref="T:System.Type"/> to be used when determining the return system type. 
+            This property is particularly useful when the markup extension is applied outside a XAML page, such as in an App.cs or style file. 
+            It ensures that the return type can be correctly inferred even when the conventional methods of determining it fail. 
+            By providing the fallback type explicitly, you can avoid potential issues related to type inference, thereby enhancing the robustness of your code.
+            </summary>
+        </member>
+        <member name="P:OnScreenSizeMarkup.Maui.OnScreenSizeExtension.Base">
+            <summary>
+            The base value that serves as a reference point for scaling according to the physical screen size of the device. 
+            If this property is specified, it will be multiplied by a specific factor that corresponds to one of the following properties:
+            <see cref="P:OnScreenSizeMarkup.Maui.OnScreenSizeExtension.ExtraSmall"/>, <see cref="P:OnScreenSizeMarkup.Maui.OnScreenSizeExtension.Small"/>, <see cref="P:OnScreenSizeMarkup.Maui.OnScreenSizeExtension.Medium"/>, <see cref="P:OnScreenSizeMarkup.Maui.OnScreenSizeExtension.Large"/>, or <see cref="P:OnScreenSizeMarkup.Maui.OnScreenSizeExtension.ExtraLarge"/>, 
+            depending on the device's categorized screen size. If this property is not specified, the aforementioned properties will be used
+            directly to return the values defined in them, depending on the determined categorization. The usage of this property aids in 
+            providing a consistent and responsive layout across different devices.
+            </summary>
+        </member>
+        <member name="P:OnScreenSizeMarkup.Maui.OnScreenSizeExtension.Default">
+            <summary>
+            Represents the default value used when one of the <see cref="P:OnScreenSizeMarkup.Maui.OnScreenSizeExtension.ExtraSmall"/>, <see cref="P:OnScreenSizeMarkup.Maui.OnScreenSizeExtension.Small"/>, <see cref="P:OnScreenSizeMarkup.Maui.OnScreenSizeExtension.Medium"/>, <see cref="P:OnScreenSizeMarkup.Maui.OnScreenSizeExtension.Large"/>, or <see cref="P:OnScreenSizeMarkup.Maui.OnScreenSizeExtension.ExtraLarge"/> properties is undefined. This default value is applied if the library detects that the device's physical size corresponds to the missing property.
+            </summary>
+            <remarks>
+            If <see cref="P:OnScreenSizeMarkup.Maui.OnScreenSizeExtension.Base"/> is defined, this value must correspond to a scale factor. It allows scaling the <see cref="P:OnScreenSizeMarkup.Maui.OnScreenSizeExtension.Base"/>'s value based on the scale factor defined here.
+            </remarks>
+        </member>
+        <member name="P:OnScreenSizeMarkup.Maui.OnScreenSizeExtension.ExtraSmall">
+            <summary>
+            Specifies the value for devices with an ExtraSmall screen size. It's applied when the device's physical screen size falls into the ExtraSmall category.
+            </summary>
+            <remarks>
+            If the <see cref="P:OnScreenSizeMarkup.Maui.OnScreenSizeExtension.Base"/> property is defined, this value will act as a scale factor. It's used to multiply the <see cref="P:OnScreenSizeMarkup.Maui.OnScreenSizeExtension.Base"/> value, allowing you to control the scaling based on the device's physical size when categorized as ExtraSmall.
+            </remarks>
+        </member>
+        <member name="P:OnScreenSizeMarkup.Maui.OnScreenSizeExtension.Small">
+            <summary>
+            Specifies the value for devices with an Small screen size. It's applied when the device's physical screen size falls into the Small category.
+            </summary>
+            <remarks>
+            If the <see cref="P:OnScreenSizeMarkup.Maui.OnScreenSizeExtension.Base"/> property is defined, this value will act as a scale factor. It's used to multiply the <see cref="P:OnScreenSizeMarkup.Maui.OnScreenSizeExtension.Base"/> value, allowing you to control the scaling based on the device's physical size when categorized as Small.
+            </remarks>
+        </member>
+        <member name="P:OnScreenSizeMarkup.Maui.OnScreenSizeExtension.Medium">
+            <summary>
+            Specifies the value for devices with an Medium screen size. It's applied when the device's physical screen size falls into the Medium category.
+            </summary>
+            <remarks>
+            If the <see cref="P:OnScreenSizeMarkup.Maui.OnScreenSizeExtension.Base"/> property is defined, this value will act as a scale factor. It's used to multiply the <see cref="P:OnScreenSizeMarkup.Maui.OnScreenSizeExtension.Base"/> value, allowing you to control the scaling based on the device's physical size when categorized as Medium.
+            </remarks>
+        </member>
+        <member name="P:OnScreenSizeMarkup.Maui.OnScreenSizeExtension.Large">
+            <summary>
+            Specifies the value for devices with an Large screen size. It's applied when the device's physical screen size falls into the Large category.
+            </summary>
+            <remarks>
+            If the <see cref="P:OnScreenSizeMarkup.Maui.OnScreenSizeExtension.Base"/> property is defined, this value will act as a scale factor. It's used to multiply the <see cref="P:OnScreenSizeMarkup.Maui.OnScreenSizeExtension.Base"/> value, allowing you to control the scaling based on the device's physical size when categorized as Large.
+            </remarks>
+        </member>
+        <member name="P:OnScreenSizeMarkup.Maui.OnScreenSizeExtension.ExtraLarge">
+            <summary>
+            Specifies the value for devices with an ExtraLarge screen size. It's applied when the device's physical screen size falls into the ExtraLarge category.
+            </summary>
+            <remarks>
+            If the <see cref="P:OnScreenSizeMarkup.Maui.OnScreenSizeExtension.Base"/> property is defined, this value will act as a scale factor. It's used to multiply the <see cref="P:OnScreenSizeMarkup.Maui.OnScreenSizeExtension.Base"/> value, allowing you to control the scaling based on the device's physical size when categorized as ExtraLarge.
+            </remarks>
+        </member>
+        <member name="M:OnScreenSizeMarkup.Maui.OnScreenSizeExtension.ProvideValue(System.IServiceProvider)">
+            <summary>
+            Xaml internal usage
+            </summary>
+        </member>
+        <member name="M:OnScreenSizeMarkup.Maui.OnScreenSizeExtension.GetValueForScreenCategory(System.IServiceProvider)">
+            <summary>
+            
+            </summary>
+            <param name="serviceProvider"></param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentException"></exception>
+        </member>
+        <member name="M:OnScreenSizeMarkup.Maui.OnScreenSizeExtension.GetScaledBasedValue">
+            <summary>
+            Calculates the scaled <see cref="P:OnScreenSizeMarkup.Maui.OnScreenSizeExtension.Base"/>'s value depending on the screen size category, by multiplying the <see cref="P:OnScreenSizeMarkup.Maui.OnScreenSizeExtension.Base"/> by the value 
+            corresponding to the current screen category. If a specific size category is not set, the Default value is used.
+            </summary>
+        </member>
+        <member name="M:OnScreenSizeMarkup.Maui.OnScreenSizeExtension.ExtractValueBasedOnScreenCategory(OnScreenSizeMarkup.Maui.Categories.ScreenCategories)">
+            <summary>
+            Extracts a value based on the current screen category, taking into account the different size categories.
+            </summary>
+            <param name="category">The screen category used to determine the appropriate value.</param>
+            <returns>The value corresponding to the specified screen category.</returns>
+            <exception cref="T:System.ArgumentException">Thrown when the specified category does not have an associated value.</exception>
+            <exception cref="T:Microsoft.Maui.Controls.Xaml.XamlParseException">Thrown when the specified category does not have an associated value.</exception>
+        </member>
+        <member name="M:OnScreenSizeMarkup.Maui.OnScreenSizeExtension.ValidateBaseSizeDependentProperties">
+            <summary>
+            Validates the properties ExtraSmall, Small, Medium, Large, and ExtraLarge to ensure they are of type int or double
+            when the BaseSize property is provided. Throws an exception if the validation fails.
+            </summary>
+            <exception cref="T:System.ArgumentException">Thrown when one of the properties is not of the expected type and BaseSize is provided.</exception>
+        </member>
+        <member name="T:OnScreenSizeMarkup.Maui.Helpers.AppleScreenDensityHelper">
+            <summary>
+            Helper class for retrieving PIxel per Inches (PPI) for apple devices so that the screen diagonal size in inches can be calculated later on. 
+            </summary>
+            <remarks>
+            Because Apple does not provide any API for dynamically retrieving Pixel per Pnches (PPI) for all its devices (as Android does),
+            we need to keep it hardcoded inside this class the PPI info based on device models,
+            device names, and screen sizes. So that we can fallback to each one of the info (device name, model and screen size)
+            to get PPI.ided apple-device-model.
+            Probably we will need to update this list as new iphones and apple devices are launched having different PPI.  
+            </remarks>
+        </member>
+        <member name="M:OnScreenSizeMarkup.Maui.Helpers.AppleScreenDensityHelper.TryGetPpiByDeviceModel(System.String,System.Double@)">
+            <summary>
+            Attempts to retrieve the pixel-per-inches (PPI) for the provided apple-device-model
+            </summary>
+            <param name="appleDeviceModel"></param>
+            <param name="ppi"></param>
+            <returns></returns>
+        </member>
+        <member name="M:OnScreenSizeMarkup.Maui.Helpers.AppleScreenDensityHelper.TryGetPpiByDeviceName(System.String,System.Double@)">
+            <summary>
+            Attempts to retrieve the pixel-per-inches for the provided apple-device-name
+            </summary>
+            <param name="appleDeviceName"></param>
+            <param name="ppi"></param>
+            <returns></returns>
+        </member>
+        <member name="M:OnScreenSizeMarkup.Maui.Helpers.AppleScreenDensityHelper.TryGetPpiByScreenDimensions(System.ValueTuple{System.Double,System.Double},System.Double@)">
+            <summary>
+            Attempts to return pixel-per-inches for the provided screen size.
+            </summary>
+            <param name="screenDimensions"></param>
+            <param name="ppi"></param>
+            <returns></returns>
+        </member>
+        <member name="M:OnScreenSizeMarkup.Maui.Helpers.AppleScreenDensityHelper.TryGetPpiWithFallBacks(System.String,System.String,System.ValueTuple{System.Double,System.Double},System.Double@)">
+            <summary>
+            Attempt to get ppi by using the provided <paramref name="appleDeviceModel"/> and in case it does not finds it
+            attempt to get ppi by using the provided <paramref name="screenDimensions"/>.
+            </summary>
+            <param name="appleDeviceModel"></param>
+            <param name="appleDeviceName"></param>
+            <param name="screenDimensions"></param>
+            <param name="ppi"></param>
+            <returns></returns>
+        </member>
+        <member name="T:OnScreenSizeMarkup.Maui.Helpers.IScreenSizeHelpers">
+            <summary>
+            Provides methods to manipulate sizes based on the physical screen size of the device.
+            </summary>
+        </member>
+        <member name="M:OnScreenSizeMarkup.Maui.Helpers.IScreenSizeHelpers.GetScreenSizeScaled(System.IConvertible,System.Double,System.Double,System.Double,System.Double,System.Double)">
+            <summary>
+            Multiplies the provided <paramref name="baseValue"/> by a factor corresponding to the physical screen size of the device.
+            </summary>
+            <param name="baseValue">The base size to be multiplied.</param>
+            <param name="extraSmallFactor">Factor for ExtraSmall sized screens.</param>
+            <param name="smallFactor">Factor for Small sized screens.</param>
+            <param name="mediumFactor">Factor for Medium sized screens.</param>
+            <param name="largeFactor">Factor for Large sized screens.</param>
+            <param name="extraLargeFactor">Factor for ExtraLarge sized screens.</param>
+            <returns>The result of the multiplication based on the screen size.</returns>
+        </member>
+        <member name="M:OnScreenSizeMarkup.Maui.Helpers.IScreenSizeHelpers.GetScreenSizeValue``1(``0,``0,``0,``0,``0,``0)">
+            <summary>
+            Selects and returns one of the provided values based on the device's physical screen size.
+            </summary>
+            <typeparam name="T">Type of the value to be returned.</typeparam>
+            <param name="defaultSize">Default value.</param>
+            <param name="extraSmall">Value for ExtraSmall sized screens.</param>
+            <param name="small">Value for Small sized screens.</param>
+            <param name="medium">Value for Medium sized screens.</param>
+            <param name="large">Value for Large sized screens.</param>
+            <param name="extraLarge">Value for ExtraLarge sized screens.</param>
+            <returns>The value corresponding to the screen size.</returns>
+            <exception cref="T:System.ArgumentException">Thrown if required parameters are not provided.</exception>
+        </member>
+        <member name="T:OnScreenSizeMarkup.Maui.Helpers.OnScreenSizeHelpers">
+            <summary>
+            Provides methods to manipulate sizes based on the physical screen size of the device.
+            </summary>
+        </member>
+        <member name="M:OnScreenSizeMarkup.Maui.Helpers.OnScreenSizeHelpers.#ctor(OnScreenSizeMarkup.Maui.Providers.IScreenCategoryProvider)">
+            <summary>
+            
+            </summary>
+            <param name="screenCategoryProvider"></param>
+        </member>
+        <member name="P:OnScreenSizeMarkup.Maui.Helpers.OnScreenSizeHelpers.Instance">
+            <summary>
+            Provides access to this instance.
+            This should only be used if the component has not been registered with MAUI's dependency injection using <see cref="M:OnScreenSizeMarkup.Maui.ConfigureServices.AddOnScreenSize(Microsoft.Extensions.DependencyInjection.IServiceCollection)"/>.
+            </summary>
+        </member>
+        <member name="M:OnScreenSizeMarkup.Maui.Helpers.OnScreenSizeHelpers.GetScreenSizeScaled(System.IConvertible,System.Double,System.Double,System.Double,System.Double,System.Double)">
+            <inheritdoc />
+        </member>
+        <member name="M:OnScreenSizeMarkup.Maui.Helpers.OnScreenSizeHelpers.GetScreenSizeValue``1(``0,``0,``0,``0,``0,``0)">
+            <inheritdoc />
+        </member>
+        <member name="T:OnScreenSizeMarkup.Maui.Manager">
+            <summary>
+            Central point for defining specific settings for the Markup extension.
+            </summary>
+        </member>
+        <member name="F:OnScreenSizeMarkup.Maui.Manager._Current">
+            <summary>
+            Gets the singleton instance of this class.
+            </summary>
+        </member>
+        <member name="P:OnScreenSizeMarkup.Maui.Manager.Mappings">
+            <summary>
+            List of mappings that defines which screen diagonal-sizes (in inches) corresponds to a specific <see cref="T:OnScreenSizeMarkup.Maui.Categories.ScreenCategories"/> and also
+            how they should be evaluated during runtime in order to correctly classify screens.
+            </summary>
+            <remarks>
+            You can override this values by setting your own mappings.
+            </remarks>
+        </member>
+        <member name="P:OnScreenSizeMarkup.Maui.Manager.IsLogEnabled">
+            <summary>
+            Display console messages for debugging purposes.
+            </summary>
+        </member>
+        <member name="P:OnScreenSizeMarkup.Maui.Manager.LogLevel">
+            <summary>
+            When <see cref="P:OnScreenSizeMarkup.Maui.Manager.IsLogEnabled"/> is true, defines how detailed the log messages should be logged to.
+            </summary>
+        </member>
+        <member name="P:OnScreenSizeMarkup.Maui.Manager.CurrentCategory">
+            <summary>
+            Returns the _Current <see cref="T:OnScreenSizeMarkup.Maui.Categories.ScreenCategories"/> set for the device.
+            </summary>
+        </member>
+        <member name="P:OnScreenSizeMarkup.Maui.Manager.DefaultScreenCategoryFallbackPlatform">
+            <summary>
+            Default categorization assumed when running on platforms other than iOS, Maccatalyst or Android.
+            Applied when running on Windows.
+            </summary>
+        </member>
+        <member name="P:OnScreenSizeMarkup.Maui.Manager.Current">
+            <summary>
+            Gets the singleton instance of this class.
+            </summary>
+        </member>
+        <member name="T:OnScreenSizeMarkup.Maui.Mappings.DefaultMappings">
+            <summary>
+            Predefined lists of mappings for using on <see cref="T:OnScreenSizeMarkup.Maui.OnScreenSizeExtension"/>.
+            </summary>
+        </member>
+        <member name="P:OnScreenSizeMarkup.Maui.Mappings.DefaultMappings.MobileMappings">
+            <summary>
+            Mappings for categorizing mobile devices screen sizes.
+            </summary>
+        </member>
+        <member name="T:OnScreenSizeMarkup.Maui.Mappings.ScreenSizeCompareModes">
+            <summary>
+            Comparison modes.
+            Used to determine how a <see cref="P:OnScreenSizeMarkup.Maui.Mappings.SizeMappingInfo.DiagonalSize"/> should be compared against an actual device diagonal size.
+            </summary>
+        </member>
+        <member name="F:OnScreenSizeMarkup.Maui.Mappings.ScreenSizeCompareModes.SmallerOrEqualsTo">
+            <summary>
+            Smaller than or equals to the current device diagonal screen size.
+            </summary>
+        </member>
+        <member name="F:OnScreenSizeMarkup.Maui.Mappings.ScreenSizeCompareModes.SpecificSize">
+            <summary>
+            Compares the current device diagonal screen size that is running the app to match the exact diagonal screen size provided
+            </summary>
+        </member>
+        <member name="T:OnScreenSizeMarkup.Maui.Mappings.SizeMappingInfo">
+            <summary>
+            Size mapping info about the screen diagonal-size and the category it falls into.
+            </summary>
+        </member>
+        <member name="M:OnScreenSizeMarkup.Maui.Mappings.SizeMappingInfo.#ctor(System.Double,OnScreenSizeMarkup.Maui.Categories.ScreenCategories,OnScreenSizeMarkup.Maui.Mappings.ScreenSizeCompareModes)">
+            <summary>
+            
+            </summary>
+            <param name="diagonalSize">Diagonal Size to compare against the actual device diagonal size of the device</param>
+            <param name="category">The category that must be assumed in case the comparison is match</param>
+            <param name="compareMode">How the comparison should be performed</param>
+        </member>
+        <member name="P:OnScreenSizeMarkup.Maui.Mappings.SizeMappingInfo.CompareMode">
+            <summary>
+            Determine how a mapping comparison should be performed against the actual diagonal screen size of the device which is running the code.
+            </summary>
+        </member>
+        <member name="P:OnScreenSizeMarkup.Maui.Mappings.SizeMappingInfo.DiagonalSize">
+            <summary>
+            Physical/actual diagonal size of the screen in inches.
+            </summary>
+        </member>
+        <member name="P:OnScreenSizeMarkup.Maui.Mappings.SizeMappingInfo.Category">
+            <summary>
+            The category the screen falls into.
+            </summary>
+        </member>
+        <member name="T:OnScreenSizeMarkup.Maui.Providers.IScreenCategoryProvider">
+            <summary>
+            Determines the category that best matches the device's screen size.
+            </summary>
+        </member>
+        <member name="M:OnScreenSizeMarkup.Maui.Providers.IScreenCategoryProvider.GetCategory">
+            <summary>
+            Determines the category of the current device's screen size based on its physical dimensions.
+            </summary>
+            <returns>
+            A value from the ScreenCategories enumeration indicating whether the screen size is ExtraSmall, Small, Medium, Large, or ExtraLarge.
+            </returns>
+        </member>
+        <member name="T:OnScreenSizeMarkup.Maui.Providers.IScreenInfoProvider">
+            <summary>
+            Provides information related to the device's screen properties.
+            </summary>
+        </member>
+        <member name="M:OnScreenSizeMarkup.Maui.Providers.IScreenInfoProvider.GetScreenDiagonalInches">
+            <summary>
+            Returns the physical diagonal size of the current device's screen in inches.
+            </summary>
+            <returns>The diagonal size of the screen in inches.</returns>
+        </member>
+        <member name="T:OnScreenSizeMarkup.Maui.Providers.ScreenCategoryProvider">
+            <summary>
+            Determines the category that best matches the device's screen size.
+            </summary>
+        </member>
+        <member name="M:OnScreenSizeMarkup.Maui.Providers.ScreenCategoryProvider.#ctor(OnScreenSizeMarkup.Maui.Providers.IScreenInfoProvider)">
+            <summary>
+            
+            </summary>
+            <param name="screenInfoProvider"></param>
+        </member>
+        <member name="P:OnScreenSizeMarkup.Maui.Providers.ScreenCategoryProvider.Instance">
+            <summary>
+            Provides access to this instance.
+            This should only be used if the component has not been registered with MAUI's dependency injection using <see cref="M:OnScreenSizeMarkup.Maui.ConfigureServices.AddOnScreenSize(Microsoft.Extensions.DependencyInjection.IServiceCollection)"/>.
+            </summary>
+        </member>
+        <member name="T:OnScreenSizeMarkup.Maui.Providers.ScreenInfoProvider">
+            <summary>
+            Provides information related to the device's screen properties.
+            </summary>
+        </member>
+        <member name="P:OnScreenSizeMarkup.Maui.Providers.ScreenInfoProvider.Instance">
+            <summary>
+            Provides access to this instance.
+            This should only be used if the component has not been registered with MAUI's dependency injection using <see cref="M:OnScreenSizeMarkup.Maui.ConfigureServices.AddOnScreenSize(Microsoft.Extensions.DependencyInjection.IServiceCollection)"/>.
+            </summary>
+        </member>
+        <member name="M:OnScreenSizeMarkup.Maui.Providers.ScreenInfoProvider.GetScreenDiagonalInches">
+            <summary>
+            Returns the physical diagonal size of the current device's screen in inches.
+            </summary>
+            <returns>The diagonal size of the screen in inches.</returns>
+        </member>
+        <member name="T:OnScreenSizeMarkup.Maui.UniversalFactory">
+            <summary>
+            The UniversalFactory class serves as a centralized factory for creating instances of classes.
+            It is specifically designed to support client applications that do not rely on dependency injection.
+            This enables a consistent and manageable way to construct objects across different parts of the application.
+            </summary>
+        </member>
+        <member name="M:OnScreenSizeMarkup.Maui.UniversalFactory.CreateScreenSizeHelpers">
+            <summary>
+            Returns an instance of <see cref="T:OnScreenSizeMarkup.Maui.Helpers.IScreenSizeHelpers"/>
+            </summary>
+            <returns></returns>
+        </member>
+    </members>
+</doc>
