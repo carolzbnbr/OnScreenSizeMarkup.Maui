@@ -22,10 +22,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <InternalsVisibleTo Include="OnScreenSizeMarkup.Maui.Tests" />
     <InternalsVisibleTo Include="Samples" />
     <InternalsVisibleTo Include="OnScreenSizeMarkup.Maui.Tests" />
-   
   </ItemGroup>
 
   <ItemGroup Condition="$(TargetFramework.StartsWith('Xamarin.iOS')) != true AND $(TargetFramework.StartsWith('net6.0-ios')) != true AND $(TargetFramework.StartsWith('net6.0-maccatalyst')) != true ">
@@ -59,11 +57,12 @@
     <None Include="**\windows\**\*.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="obj\Debug\net6.0-android\" />
-    <Folder Include="obj\Debug\net6.0-ios\" />
-    <Folder Include="obj\Debug\net6.0-maccatalyst\" />
-    <Folder Include="obj\Debug\net6.0\" />
+    <PackageReference Include="Nerdbank.GitVersioning" Version="3.6.133">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
+ 
 
 
 </Project>
