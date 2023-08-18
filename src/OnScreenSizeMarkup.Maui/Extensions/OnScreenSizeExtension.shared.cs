@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Reflection;
@@ -151,7 +152,7 @@ public class OnScreenSizeExtension : IMarkupExtension<object>
 	{
 		if (Base is not null)
 		{
-			var result = GetScaledBasedValue();
+			var result = GetScaledValue(serviceProvider);
 			return result;
 		}
 		else
@@ -169,6 +170,57 @@ public class OnScreenSizeExtension : IMarkupExtension<object>
 	/// <returns></returns>
 	/// <exception cref="ArgumentException"></exception>
 	private object GetValueForScreenCategory(IServiceProvider serviceProvider)
+	{
+		var bp = GetBindableProperty(serviceProvider, out var propertyType);
+
+		// Resolve StaticResource if needed
+		var value = ResolveStaticResource(serviceProvider,
+			ExtractValueBasedOnScreenCategory(screenCategoryProvider.GetCategory()));
+
+
+		return value!.ConvertTo(propertyType, bp!);
+
+	}
+
+
+	/// <summary>
+	/// Calculates the scaled <see cref="Base"/>'s value depending on the screen size category, by multiplying the <see cref="Base"/> by the value 
+	/// corresponding to the current screen category. If a specific size category is not set, the Default value is used.
+	/// </summary>
+	private object GetScaledValue(IServiceProvider serviceProvider)
+    {
+    	ValidateBaseSizeDependentProperties();
+	    
+    	var result = screenSizeHelpers.GetScreenSizeScaled(
+    		(IConvertible)Base!, 
+		    ConvertToDouble(ExtraSmall),
+		    ConvertToDouble(Small),
+		    ConvertToDouble(Medium),
+		    ConvertToDouble(Large),
+		    ConvertToDouble(ExtraLarge));
+	   
+	    var bp = GetBindableProperty(serviceProvider, out var propertyType);
+	    
+	    return result!.ConvertTo(propertyType, bp!);
+    }
+
+	private double ConvertToDouble(object value)
+	{
+		if (value == defaultNull)
+		{
+			return double.Parse((string)Default, CultureInfo.InvariantCulture);
+		}
+
+		return (double)value!.ConvertTo(typeof(double), null!);
+	}
+
+	private Type DeterminePropertyType(BindableProperty? bp, PropertyInfo? pi)
+	{
+		return bp?.ReturnType ?? pi?.PropertyType ?? FallbackType ?? throw new InvalidOperationException($"Could not infer the return type for the property that you are applying the markup to. Please ensure that the property has a valid return type and that it is accessible. In some cases, you may need to set the \"{nameof(FallbackType)}\" property explicitly to specify the return type of the property. If you continue to experience this issue, please review your code and try again.");
+	}
+	
+
+	private BindableProperty? GetBindableProperty(IServiceProvider serviceProvider, out Type propertyType)
 	{
 		if (serviceProvider == null)
 		{
@@ -195,51 +247,9 @@ public class OnScreenSizeExtension : IMarkupExtension<object>
 			$"Providing Value using propertyType:\"{(bp?.ReturnType ?? pi?.PropertyType ?? null)}\" and BindableProperty:{(bp ?? null)}",
 			LogLevels.Verbose);
 
-		// Resolve StaticResource if needed
-		var value = ResolveStaticResource(serviceProvider,
-			ExtractValueBasedOnScreenCategory(screenCategoryProvider.GetCategory()));
-
-		var propertyType = DeterminePropertyType(bp, pi);
-
-		return value!.ConvertTo(propertyType, bp!);
-
+		propertyType = DeterminePropertyType(bp, pi);
+		return bp;
 	}
-
-
-	/// <summary>
-	/// Calculates the scaled <see cref="Base"/>'s value depending on the screen size category, by multiplying the <see cref="Base"/> by the value 
-	/// corresponding to the current screen category. If a specific size category is not set, the Default value is used.
-	/// </summary>
-	private object GetScaledBasedValue()
-    {
-    	ValidateBaseSizeDependentProperties();
-	    
-    	var result = screenSizeHelpers.GetScreenSizeScaled(
-    		(IConvertible)Base!, 
-		    ConvertToDouble(ExtraSmall),
-		    ConvertToDouble(Small),
-		    ConvertToDouble(Medium),
-		    ConvertToDouble(Large),
-		    ConvertToDouble(ExtraLarge));
-	   
-	    return result!.ConvertTo(typeof(double), null!);
-    }
-
-	private double ConvertToDouble(object value)
-	{
-		if (value == defaultNull)
-		{
-			return double.Parse((string)Default, CultureInfo.InvariantCulture);
-		}
-
-		return (double)value!.ConvertTo(typeof(double), null!);
-	}
-
-	private Type DeterminePropertyType(BindableProperty? bp, PropertyInfo? pi)
-	{
-		return bp?.ReturnType ?? pi?.PropertyType ?? FallbackType ?? throw new InvalidOperationException($"Could not infer the return type for the property that you are applying the markup to. Please ensure that the property has a valid return type and that it is accessible. In some cases, you may need to set the \"{nameof(FallbackType)}\" property explicitly to specify the return type of the property. If you continue to experience this issue, please review your code and try again.");
-	}
-	
 
 	
 	/// <summary>
@@ -314,7 +324,6 @@ public class OnScreenSizeExtension : IMarkupExtension<object>
 		{
 			throw new ArgumentException($"The property {nameof(Base)} must be a primitive number such as int, double, int64, short, decimal, and etc.");
 		}
-
 
 		
 

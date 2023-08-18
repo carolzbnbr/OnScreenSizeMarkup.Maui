@@ -49,6 +49,14 @@
                 WidthRequest="{StaticResource ImageSize}"
                 HorizontalOptions="Center" />
             
+            <Frame
+                WidthRequest="{markups:OnScreenSize Base='50', Large='2', Default='1'}"
+                HeightRequest="{markups:OnScreenSize Base='50', Large='2', Default='1'}"
+                CornerRadius="{markups:OnScreenSize Base='25', Large='2', Default='1'}"
+                >
+                
+            </Frame>
+            
                 <Label
                     Style="{StaticResource HeadingLabel}"
                  >
