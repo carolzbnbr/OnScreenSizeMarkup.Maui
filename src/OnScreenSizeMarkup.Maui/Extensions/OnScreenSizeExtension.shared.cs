@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -69,7 +70,7 @@ public class OnScreenSizeExtension : IMarkupExtension<object>
 	/// directly to return the values defined in them, depending on the determined categorization. The usage of this property aids in 
 	/// providing a consistent and responsive layout across different devices.
 	/// </summary>
-	public object? Base { get; set; } 
+	public object? Base { get; set; }
 
 	/// <summary>
 	/// Represents the default value used when one of the <see cref="ExtraSmall"/>, <see cref="Small"/>, <see cref="Medium"/>, <see cref="Large"/>, or <see cref="ExtraLarge"/> properties is undefined. This default value is applied if the library detects that the device's physical size corresponds to the missing property.
@@ -77,7 +78,7 @@ public class OnScreenSizeExtension : IMarkupExtension<object>
 	/// <remarks>
 	/// If <see cref="Base"/> is defined, this value must correspond to a scale factor. It allows scaling the <see cref="Base"/>'s value based on the scale factor defined here.
 	/// </remarks>
-	public object Default { get; set; }
+	public object Default { get; set; } 
 
 
 	/// <summary>
@@ -204,7 +205,7 @@ public class OnScreenSizeExtension : IMarkupExtension<object>
 
 	}
 
-	
+
 	/// <summary>
 	/// Calculates the scaled <see cref="Base"/>'s value depending on the screen size category, by multiplying the <see cref="Base"/> by the value 
 	/// corresponding to the current screen category. If a specific size category is not set, the Default value is used.
@@ -212,7 +213,7 @@ public class OnScreenSizeExtension : IMarkupExtension<object>
 	private object GetScaledBasedValue()
     {
     	ValidateBaseSizeDependentProperties();
-    
+	    
     	var result = screenSizeHelpers.GetScreenSizeScaled(
     		(IConvertible)Base!, 
 		    ConvertToDouble(ExtraSmall),
@@ -220,8 +221,7 @@ public class OnScreenSizeExtension : IMarkupExtension<object>
 		    ConvertToDouble(Medium),
 		    ConvertToDouble(Large),
 		    ConvertToDouble(ExtraLarge));
-	    
-		    
+	   
 	    return result!.ConvertTo(typeof(double), null!);
     }
 
@@ -229,27 +229,10 @@ public class OnScreenSizeExtension : IMarkupExtension<object>
 	{
 		if (value == defaultNull)
 		{
-			return (double)Default;
+			return double.Parse((string)Default, CultureInfo.InvariantCulture);
 		}
 
 		return (double)value!.ConvertTo(typeof(double), null!);
-		
-		if (value is double doubleValue)
-		{
-			return doubleValue; 
-		}
-		
-		if (value is int intValue)
-		{
-			return Convert.ToDouble(intValue);  //convert int to double
-		}
-
-		if (value is string stringValue && double.TryParse(stringValue, out double result))
-		{
-			return result; 
-		}
-		
-		return (double)Default;
 	}
 
 	private Type DeterminePropertyType(BindableProperty? bp, PropertyInfo? pi)
@@ -354,7 +337,7 @@ public class OnScreenSizeExtension : IMarkupExtension<object>
 			// Só validar a propriedade se ela foi preenchida (diferente de defaultNull)
 			if (entry.Value != defaultNull && !(entry.Value is int || entry.Value is double))
 			{
-				if (entry.Value is string stringValue && (double.TryParse(stringValue, out _) || int.TryParse(stringValue, out _)))
+				if (entry.Value is string stringValue && (Single.TryParse(stringValue, out _) || double.TryParse(stringValue, out _) || int.TryParse(stringValue, out _)))
 				{
 					continue; // O valor é uma string representando um número, então continuamos o loop.
 				}
