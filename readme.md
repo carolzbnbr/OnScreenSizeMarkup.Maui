@@ -60,14 +60,14 @@ Screen are grouped into six categories, allowing for precise UI control. You can
 
 The markup extension has many properties which will be eligible to be used based on the categorized screen size
 
-* *ExtraSmall* - Applied when the device screen size is categorized as ExtraSmall
-* *Small* - Applied when the device screen size is categorized as ExtraSmall
-* *Medium* - Applied when the device screen size is categorized as ExtraSmall
-* *Large* - Applied when the device screen size is categorized as ExtraSmall
-* *ExtraLarge* - Applied when the device screen size is categorized as ExtraSmall
-* *Default* - Applied when one of the required property above is missing
+* `ExtraSmall` - Applied when the device screen size is categorized as ExtraSmall
+* `Small` - Applied when the device screen size is categorized as ExtraSmall
+* `Medium` - Applied when the device screen size is categorized as ExtraSmall
+* `Large` - Applied when the device screen size is categorized as ExtraSmall
+* `ExtraLarge` - Applied when the device screen size is categorized as ExtraSmall
+* `Default` - Applied when one of the required property above is missing
 
-* *Base* - This is a special property, used in conjunction with the previous ones. 
+* `Base` - This is a special property, used in conjunction with the previous ones. 
 Use it to set numeric values such as double, float, int, single, etc. 
 This property allows the use of Scaled Values, where the base/initial value is defined on this property, and the scale factor should be specified on the previous ones. This allows, for instance, to scale a Grid Row, Grid Column, widthRequest, HeightRequest, FontSizes, etc., based on the size of the screen. See more in the Scaled Values section below.
 
