@@ -12,12 +12,37 @@ Install-Package OnScreenSizeMarkup.Maui
 ```
 
 
-
 ### **Where can I use it?**
 
 OnScreenSizeMarkup is currently supported for .NET MAUI [![NuGet Stats](https://img.shields.io/nuget/v/OnScreenSizeMarkup.Maui?style=plastic)](https://www.nuget.org/packages/OnScreenSizeMarkup.Maui).
 
 If you are a Xamarin developer you can find an **outdated** version of this library for Xamarin.Forms [here](https://github.com/carolzbnbr/OnScreenSizeMarkup) - sorry folks :(
+
+
+### Changes to Screen Size Calculations (Breaking Change)
+Starting with version 3.0, we have modified the way the diagonal screen size is calculated to better support native screen resolution. If you require the previous behavior, please set the *UseNativeScreenResolution* property to *false*, as follows:
+
+```cs
+
+public App()
+{
+            OnScreenSizeMarkup.Maui.Manager.Current.UseNativeScreenResolution = false;
+
+            InitializeComponent();
+
+            .....
+}
+```
+
+
+
+
+### **Supported Platforms**
+
+* `iOS` - iPhones and Tablets
+* `Android` - Android Smartphones and Tablets
+
+
 
 ### **How does it work?**
 
@@ -30,6 +55,22 @@ Screen are grouped into six categories, allowing for precise UI control. You can
 * `Medium` - Medium devices such as IPhone 12.
 * `Large` - Large devices such as an IPhone 13 Pro Max.
 * `ExtraLarge` - Extra large devices such as tablets.
+
+### Understanding the Properties of Markup
+
+The markup extension has many properties which will be eligible to be used based on the categorized screen size
+
+* *ExtraSmall* - Applied when the device screen size is categorized as ExtraSmall
+* *Small* - Applied when the device screen size is categorized as ExtraSmall
+* *Medium* - Applied when the device screen size is categorized as ExtraSmall
+* *Large* - Applied when the device screen size is categorized as ExtraSmall
+* *ExtraLarge* - Applied when the device screen size is categorized as ExtraSmall
+* *Default* - Applied when one of the required property above is missing
+
+* *Base* - This is a special property, used in conjunction with the previous ones. 
+Use it to set numeric values such as double, float, int, single, etc. 
+This property allows the use of Scaled Values, where the base/initial value is defined on this property, and the scale factor should be specified on the previous ones. This allows, for instance, to scale a Grid Row, Grid Column, widthRequest, HeightRequest, FontSizes, etc., based on the size of the screen. See more in the Scaled Values section below.
+
 
 #### Category Mappings
 
@@ -71,8 +112,9 @@ public App()
 }
 ```
 
+
 ## Non-Scaled Values
-This is the original library's behaviour, so based on a matched category, it will return the value defined on a property for that category.
+Based on a matched screen category, it will return the value defined on a property for that category.
 
 For instance:
 

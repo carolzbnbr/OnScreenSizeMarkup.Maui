@@ -33,8 +33,11 @@ public class Manager
     /// </remarks>
     public List<SizeMappingInfo> Mappings { get; set; } = DefaultMappings.MobileMappings;
 
-   
-    public bool UseNativeScreenResolution { get; set; } = false;
+    /// <summary>
+    /// Controls the use of native screen resolution implementation for calculating diagonal sizes.
+    /// When set to True, native APIs are used to calculate screen diagonal sizes; otherwise, the calculation relies on Maui Essentials.
+    /// </summary>
+    public bool UseNativeScreenResolution { get; set; } = true;
 
 	/// <summary>
 	/// Display console messages for debugging purposes.
