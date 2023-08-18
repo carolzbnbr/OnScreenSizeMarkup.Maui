@@ -14,7 +14,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnScreenSizeMarkup.Maui.Tests", "..\OnScreenSizeMarkup.Maui.Tests\OnScreenSizeMarkup.Maui.Tests.csproj", "{F93DDDAB-FF48-4195-87B9-C57CA650D591}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Samples", "..\..\samples\OnScreenSizeMarkup.Maui.Samples\Samples.csproj", "{115C18BF-435A-4E9E-8D2F-A6D5D13B7ACA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnScreeenSizeMarkup.Sample", "..\..\OnScreeenSizeMarkup.Sample\OnScreeenSizeMarkup.Sample.csproj", "{27C1F35F-EAFE-4F52-B546-92A94BF80253}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -30,10 +30,10 @@ Global
 		{F93DDDAB-FF48-4195-87B9-C57CA650D591}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F93DDDAB-FF48-4195-87B9-C57CA650D591}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F93DDDAB-FF48-4195-87B9-C57CA650D591}.Release|Any CPU.Build.0 = Release|Any CPU
-		{115C18BF-435A-4E9E-8D2F-A6D5D13B7ACA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{115C18BF-435A-4E9E-8D2F-A6D5D13B7ACA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{115C18BF-435A-4E9E-8D2F-A6D5D13B7ACA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{115C18BF-435A-4E9E-8D2F-A6D5D13B7ACA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{27C1F35F-EAFE-4F52-B546-92A94BF80253}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{27C1F35F-EAFE-4F52-B546-92A94BF80253}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{27C1F35F-EAFE-4F52-B546-92A94BF80253}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{27C1F35F-EAFE-4F52-B546-92A94BF80253}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
