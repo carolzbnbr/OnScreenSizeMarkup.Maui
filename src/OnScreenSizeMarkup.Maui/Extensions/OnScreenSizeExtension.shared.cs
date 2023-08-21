@@ -335,10 +335,11 @@ public class OnScreenSizeExtension : IMarkupExtension<object>
 			{ nameof(ExtraLarge), ExtraLarge }
 		};
 
+		var defaultHasExpectedType = (Default is int || Default is double || (Default is string defaultString && (int.TryParse(defaultString, out _) || double.TryParse(defaultString, out _))));
 		bool anyPropertyFilled = propertiesToCheck.Any(entry => entry.Value != defaultNull);
-		if (!anyPropertyFilled && !(Default is int || Default is double))
+		if (!anyPropertyFilled && !defaultHasExpectedType)
 		{
-			throw new ArgumentException($"The property {nameof(Default)} must be of type int or double when {nameof(Base)} is provided and no other properties are provided.");
+			throw new ArgumentException($"The property {nameof(Default)} must be of type int or double when {nameof(Base)} is provided and no other properties are provided. Current type of property {nameof(Default)} is \"{Default.GetType().FullName}\" ");
 		}
 
 		foreach (var entry in propertiesToCheck)
