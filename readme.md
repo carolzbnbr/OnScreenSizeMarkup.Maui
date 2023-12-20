@@ -94,10 +94,14 @@ Sure you can!
 Inside your app.cs file, **before** the initializeComponent, add your own mappings as follows:
 
 ```cs
+// Add the following Usings.
+using OnScreenSizeMarkup.Maui;
+using OnScreenSizeMarkup.Maui.Categories;
+using OnScreenSizeMarkup.Maui.Mappings;
 
 public App()
 {
-            OnScreenSizeMarkup.Maui.Manager.Mappings = new List<SizeMappingInfo>
+            Manager.Mappings = new List<SizeMappingInfo>
             {
                 new SizeMappingInfo(3.9, ScreenCategories.ExtraSmall, ScreenSizeCompareModes.SmallerOrEqualsTo),
                 new SizeMappingInfo(4.9, ScreenCategories.Small, ScreenSizeCompareModes.SmallerOrEqualsTo),
@@ -176,6 +180,29 @@ You can also declare the markup inside resource dictionary, app.xaml.cs, or even
                                               Large="200"
                                               ExtraLarge="300"
                         />
+                    </On>
+                </OnPlatform.Platforms>
+            </OnPlatform>
+
+            <OnPlatform x:Key="MarginSize" x:TypeArguments="Thickness">
+                <OnPlatform.Platforms>
+                    <On Platform="Android">
+                        <markups:OnScreenSize FallbackType="{x:Type Thickness}"
+                                              Default="0,40,0,40"
+                                              ExtraSmall="0,40,0,40"
+                                              Small="10,40,10,40"     
+                                              Medium="25,40,25,40"
+                                              Large="35,40,35,40"
+                                              ExtraLarge="70,40,70,40" />
+                    </On>
+                    <On Platform="iOS">
+                        <markups:OnScreenSize FallbackType="{x:Type Thickness}"
+                                             Default="0,40,0,40"
+                                             ExtraSmall="0,40,0,40"
+                                             Small="10,40,10,40"     
+                                             Medium="20,40,20,40"
+                                             Large="40,40,40,40"
+                                             ExtraLarge="90,40,90,40" />
                     </On>
                 </OnPlatform.Platforms>
             </OnPlatform>
