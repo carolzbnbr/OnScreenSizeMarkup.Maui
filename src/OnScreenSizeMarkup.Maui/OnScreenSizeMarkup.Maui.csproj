@@ -20,7 +20,8 @@
   <PropertyGroup>
       <PublishTrimmed>false</PublishTrimmed>
   </PropertyGroup>
-
+  
+  
   <ItemGroup>
     <InternalsVisibleTo Include="Samples" />
     <InternalsVisibleTo Include="OnScreenSizeMarkup.Maui.Tests" />

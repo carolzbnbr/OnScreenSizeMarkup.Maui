@@ -43,8 +43,12 @@
     <RepositoryUrl>https://github.com/carolzbnbr/OnScreenSizeMarkup.Maui</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
-<!--    <PackageReadmeFile>readme.md</PackageReadmeFile>-->
+    <PackageReadmeFile>Readme.md</PackageReadmeFile>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="Readme.md" Pack="true" PackagePath="\"/>
+  </ItemGroup>
   
   <PropertyGroup>
     <LangVersion>latest</LangVersion>
