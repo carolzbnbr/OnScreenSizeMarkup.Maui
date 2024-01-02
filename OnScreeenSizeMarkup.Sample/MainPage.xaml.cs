@@ -19,12 +19,4 @@ public partial class MainPage : ContentPage
        
     }
 
-
-    protected override void OnAppearing()
-    {
-        mappings.ItemsSource = OnScreenSizeMarkup.Maui.Manager.Current.Mappings;
-        
-        base.OnAppearing();
-    }
-
 }

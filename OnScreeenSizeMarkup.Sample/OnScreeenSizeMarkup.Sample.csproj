@@ -53,7 +53,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\src\OnScreenSizeMarkup.Maui\OnScreenSizeMarkup.Maui.csproj" />
+        <ProjectReference Include="..\src\OnScreenSizeMarkup.Maui\OnScreenSizeMarkup.Maui.csproj" />
     </ItemGroup>
 
 </Project>

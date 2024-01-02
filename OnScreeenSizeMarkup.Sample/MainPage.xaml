@@ -3,7 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:markups="clr-namespace:OnScreenSizeMarkup.Maui;assembly=OnScreenSizeMarkup.Maui"
              xmlns:mappings="clr-namespace:OnScreenSizeMarkup.Maui.Mappings;assembly=OnScreenSizeMarkup.Maui"
-             x:Class="OnScreeenSizeMarkup.Sample.MainPage">
+             xmlns:viewModels="clr-namespace:OnScreeenSizeMarkup.Sample.ViewModels"
+             x:Class="OnScreeenSizeMarkup.Sample.MainPage"
+             x:DataType="viewModels:MainPageViewModel"
+             >
 <ContentPage.Resources>
     
     <ResourceDictionary>
@@ -18,7 +21,7 @@
         </Style>
         
         <Style x:Key="TableHeadingLabel" TargetType="Label">
-            <Setter Property="FontSize" Value="{markups:OnScreenSize ExtraSmall='12', Small='14',  Medium='14', Large='16', ExtraLarge='32'}"/>
+            <Setter Property="FontSize" Value="{markups:OnScreenSize Default='12', Small='14',  Medium='14', Large='16', ExtraLarge='32'}"/>
             <Setter Property="FontAttributes" Value="Bold"/>
             <Setter Property="HorizontalOptions" Value="Center"/>
             <Setter Property="HorizontalTextAlignment" Value="Center"/>
@@ -26,12 +29,12 @@
         </Style>
         
         <Style x:Key="TableDataLabel" TargetType="Label">
-            <Setter Property="FontSize" Value="{markups:OnScreenSize ExtraSmall='11', Small='12',  Medium='12', Large='14', ExtraLarge='28'}"/>
+            <Setter Property="FontSize" Value="{markups:OnScreenSize Default='11', Small='12',  Medium='12', Large='14', ExtraLarge='28'}"/>
             <Setter Property="HorizontalOptions" Value="Center"/>
             <Setter Property="HorizontalTextAlignment" Value="Center"/>
         </Style>
 
-        <Thickness x:Key="PaddingThickness">145,50,15,5</Thickness>
+        <Thickness x:Key="PaddingThickness">10,50,15,5</Thickness>
 
         </ResourceDictionary>
 
@@ -64,14 +67,14 @@
                         <FormattedString>
                             <Span Text="You are seeing " />
                 
-                            <Span Text="{markups:OnScreenSize ExtraSmall='Green',  Small='Red', Medium='Blue', Large='Pink', ExtraLarge='Purple'}"
-                                  TextColor="{markups:OnScreenSize ExtraSmall='Green',  Small='Red', Medium='Blue', Large='Pink', ExtraLarge='Purple'}"/>
+                            <Span Text="{markups:OnScreenSize ExtraSmall='Green',  Small='Red', Medium='Blue', Large='Pink', ExtraLarge='Purple', Mini='Orange', SmallPlus='Yellow', LargePlus='Brown', Giant='Black', Jumbo='Gray', Default='Gray'}"
+                                  TextColor="{markups:OnScreenSize ExtraSmall='Green',  Small='Red', Medium='Blue', Large='Pink', ExtraLarge='Purple', Mini='Orange', SmallPlus='Yellow', LargePlus='Brown', Giant='Black', Jumbo='Gray', Default='Gray'}"/>
             
                             <Span Text=" because your device was categorized as " />
                             
-                            <Span Text="{markups:OnScreenSize ExtraSmall='ExtraSmall', Small='Small', Medium='Medium', Large='Large', ExtraLarge='ExtraLarge'}"
+                            <Span Text="{markups:OnScreenSize ExtraSmall='ExtraSmall', Small='Small', Medium='Medium', Large='Large', ExtraLarge='ExtraLarge', Mini='Mini', SmallPlus='SmallPlus', LargePlus='LargePlus', Giant='Giant', Jumbo='Jumbo', Default='Default'}"
                                   TextColor="White"
-                                  BackgroundColor="{markups:OnScreenSize ExtraSmall='Green',  Small='Red', Medium='Blue', Large='Pink', ExtraLarge='Purple'}" />
+                                  BackgroundColor="{markups:OnScreenSize ExtraSmall='Green',  Small='Red', Medium='Blue', Large='Pink', ExtraLarge='Purple', Mini='Orange', SmallPlus='Yellow', LargePlus='Brown', Giant='Black', Jumbo='Gray', Default='Gray'}" />
                         </FormattedString>
                     </Label.FormattedText>
                 </Label>
@@ -114,38 +117,74 @@
                     <Label Grid.Row="0" Grid.Column="2"
                            Text="Category"
                            Style="{StaticResource TableHeadingLabel}"  />
-
-                    <CollectionView x:Name="mappings" 
-                                    Grid.Row="1"
-                                    Grid.ColumnSpan="3">
-                        <CollectionView.ItemsLayout>
-                            <LinearItemsLayout Orientation="Vertical" />
-                        </CollectionView.ItemsLayout>
-                        <CollectionView.ItemTemplate>
-                            <DataTemplate >
-                                <Grid x:DataType="mappings:SizeMappingInfo"  
-                                       ColumnDefinitions="{markups:OnScreenSize Default='*, *, *', ExtraLarge='2*, *, *'}">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="{markups:OnScreenSize ExtraSmall=30, Small=30, Medium=35, Large=45, ExtraLarge=80}" />
-                                    </Grid.RowDefinitions>                                    
-                                    <Label Grid.Column="0"
-                                           Text="{Binding CompareMode}"
-                                           Style="{StaticResource TableDataLabel}"
-                                           HorizontalOptions="Center" />
-                                    
-                                    <Label Grid.Column="1"
-                                           Text="{Binding DiagonalSize, StringFormat='{0}&quot;'}"
-                                           Style="{StaticResource TableDataLabel}"
-                                           HorizontalOptions="Center" />
-                                    
-                                    <Label  Grid.Column="2"
-                                            Text="{Binding Category}"
-                                            Style="{StaticResource TableDataLabel}"
-                                            HorizontalOptions="Center" />
-                                </Grid>
-                            </DataTemplate>
-                        </CollectionView.ItemTemplate>
-                    </CollectionView>
+                    
+           <FlexLayout
+                          Grid.Row="1"
+                          Grid.ColumnSpan="3"
+            Direction="Row"
+            AlignItems="Start"
+             Wrap="Wrap"
+            BindableLayout.ItemsSource="{Binding Mappings}">
+            <BindableLayout.ItemTemplate>
+                <DataTemplate >
+                    <Grid x:DataType="mappings:SizeMappingInfo"
+                          ColumnDefinitions="{markups:OnScreenSize Default='150, 70, 150', ExtraLarge='2*, *, *'}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="{markups:OnScreenSize ExtraSmall=30, Small=30, Medium=35, Large=45, ExtraLarge=80, Default=40}" />
+                        </Grid.RowDefinitions>
+                        <Label Grid.Column="0"
+                               Text="{Binding CompareMode}"
+                               Style="{StaticResource TableDataLabel}"
+                               HorizontalOptions="Center" />
+                                
+                        <Label Grid.Column="1"
+                               Text="{Binding DiagonalSize, StringFormat='{0}&quot;'}"
+                               Style="{StaticResource TableDataLabel}"
+                               HorizontalOptions="Center" />
+                                
+                        <Label  Grid.Column="2"
+                                Text="{Binding Category}"
+                                Style="{StaticResource TableDataLabel}"
+                                HorizontalOptions="Center" />
+                    </Grid>
+                </DataTemplate>
+            </BindableLayout.ItemTemplate>
+        </FlexLayout>
+        
+                    <!-- -->
+                    <!-- <CollectionView  -->
+                    <!--                 Grid.Row="1" -->
+                    <!--                 Grid.ColumnSpan="3" -->
+                    <!--                 ItemsSource="{Binding Mappings}" -->
+                    <!--                 > -->
+                    <!--     <CollectionView.ItemsLayout> -->
+                    <!--         <LinearItemsLayout Orientation="Vertical" /> -->
+                    <!--     </CollectionView.ItemsLayout> -->
+                    <!--     <CollectionView.ItemTemplate> -->
+                    <!--         <DataTemplate > -->
+                    <!--             <Grid x:DataType="mappings:SizeMappingInfo" -->
+                    <!--                   ColumnDefinitions="{markups:OnScreenSize Default='*, *, *', ExtraLarge='2*, *, *'}"> -->
+                    <!--                 <Grid.RowDefinitions> -->
+                    <!--                     <RowDefinition Height="{markups:OnScreenSize ExtraSmall=30, Small=30, Medium=35, Large=45, ExtraLarge=80, Default=40}" /> -->
+                    <!--                 </Grid.RowDefinitions> -->
+                    <!--                 <Label Grid.Column="0" -->
+                    <!--                        Text="{Binding CompareMode}" -->
+                    <!--                        Style="{StaticResource TableDataLabel}" -->
+                    <!--                        HorizontalOptions="Center" /> -->
+                    <!--              -->
+                    <!--                 <Label Grid.Column="1" -->
+                    <!--                        Text="{Binding DiagonalSize, StringFormat='{0}&quot;'}" -->
+                    <!--                        Style="{StaticResource TableDataLabel}" -->
+                    <!--                        HorizontalOptions="Center" /> -->
+                    <!--              -->
+                    <!--                 <Label  Grid.Column="2" -->
+                    <!--                         Text="{Binding Category}" -->
+                    <!--                         Style="{StaticResource TableDataLabel}" -->
+                    <!--                         HorizontalOptions="Center" /> -->
+                    <!--             </Grid> -->
+                    <!--         </DataTemplate> -->
+                    <!--     </CollectionView.ItemTemplate> -->
+                    <!-- </CollectionView> -->
 
                 </Grid>
             
