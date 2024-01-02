@@ -74,7 +74,6 @@ public static class DefaultMappings
 		new SizeMappingInfo(10.1, ScreenCategories.Large, ScreenSizeCompareModes.SmallerOrEqualsTo),
 		new SizeMappingInfo(11.9, ScreenCategories.LargePlus, ScreenSizeCompareModes.SmallerOrEqualsTo),
 		new SizeMappingInfo(12.9, ScreenCategories.ExtraLarge, ScreenSizeCompareModes.SmallerOrEqualsTo),
-		// The following categories might need further consideration
 		new SizeMappingInfo(0, ScreenCategories.ExtraExtraLarge, ScreenSizeCompareModes.SmallerOrEqualsTo),
 		new SizeMappingInfo(0, ScreenCategories.Jumbo, ScreenSizeCompareModes.SmallerOrEqualsTo),
 		new SizeMappingInfo(0, ScreenCategories.SuperJumbo, ScreenSizeCompareModes.SmallerOrEqualsTo),
