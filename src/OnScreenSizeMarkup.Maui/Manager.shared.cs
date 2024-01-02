@@ -31,7 +31,7 @@ public class Manager
     /// <remarks>
     /// You can override this values by setting your own mappings.
     /// </remarks>
-    public List<SizeMappingInfo> Mappings { get; set; } = DefaultMappings.MobileMappings;
+    public List<SizeMappingInfo> Mappings { get; set; } = DefaultMappings.MobileMappingsLegacy;
 
     /// <summary>
     /// Controls the use of native screen resolution implementation for calculating diagonal sizes.

@@ -1,47 +1,45 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Reflection;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Maui.Controls;
-using Microsoft.Maui.Controls.Xaml;
-using Microsoft.Maui.Graphics.Text;
-using OnScreenSizeMarkup.Maui.Categories;
-using OnScreenSizeMarkup.Maui.Extensions;
-using OnScreenSizeMarkup.Maui.Helpers;
 using OnScreenSizeMarkup.Maui.Providers;
-using ServiceProvider = OnScreenSizeMarkup.Maui.Helpers.ServiceProvider;
 
 namespace OnScreenSizeMarkup.Maui;
 
-
 /// <summary>
-/// Markup extension that allows specify values to be applied to a physical screen size according to the category
-/// the screen it fits in, such as ExtraSmall, Small, Medium, Large, ExtraLarge, or Default.
+/// Markup extension that allows specifying values to be applied based on the physical screen size of the device, 
+/// corresponding to a range of screen size categories such as Mini, ExtraSmall, Small, SmallPlus, Medium, MediumPlus, 
+/// Large, LargePlus, ExtraLarge, ExtraExtraLarge, Jumbo, SuperJumbo, Giant, or Default.
 /// </summary>
 [SuppressMessage("Style", "IDE0040:Adicionar modificadores de acessibilidade")]
 [SuppressMessage("ReSharper", "UseStringInterpolation")]
 public class OnScreenSizeExtension : IMarkupExtension<object>
 {
-	static readonly object defaultNull = new();
+	private static readonly object defaultNull = new();
 
-	static readonly IScreenCategoryProvider screenCategoryProvider;
+	private static readonly IScreenCategoryProvider screenCategoryProvider;
 	private static readonly IScreenSizeHelpers screenSizeHelpers;
+
 	static OnScreenSizeExtension()
 	{
 		screenCategoryProvider = UniversalFactory.CreateScreenCategoryProvider();
 		screenSizeHelpers = UniversalFactory.CreateScreenSizeHelpers();
 	}
 
-	private Dictionary<ScreenCategories, object> categoryPropertyValues = new() {
-		{ ScreenCategories.ExtraSmall, defaultNull},
-		{ ScreenCategories.Small, defaultNull},
-		{ ScreenCategories.Medium,  defaultNull},
-		{ ScreenCategories.Large,  defaultNull},
-		{ ScreenCategories.ExtraLarge,  defaultNull},
+	private Dictionary<ScreenCategories, object> categoryPropertyValues = new()
+	{
+		{ ScreenCategories.Mini, defaultNull },
+		{ ScreenCategories.ExtraSmall, defaultNull },
+		{ ScreenCategories.Small, defaultNull },
+		{ ScreenCategories.SmallPlus, defaultNull },
+		{ ScreenCategories.Medium, defaultNull },
+		{ ScreenCategories.MediumPlus, defaultNull },
+		{ ScreenCategories.Large, defaultNull },
+		{ ScreenCategories.LargePlus, defaultNull },
+		{ ScreenCategories.ExtraLarge, defaultNull },
+		{ ScreenCategories.ExtraExtraLarge, defaultNull },
+		{ ScreenCategories.Jumbo, defaultNull },
+		{ ScreenCategories.SuperJumbo, defaultNull },
+		{ ScreenCategories.Giant, defaultNull }
 	};
 
 	/// <summary>
@@ -51,10 +49,10 @@ public class OnScreenSizeExtension : IMarkupExtension<object>
 	{
 		Base = default!;
 		Default = defaultNull;
-		this.FallbackType = null!;
+		FallbackType = null!;
 	}
 
-	
+
 	/// <summary>
 	/// Gets or sets the fallback <see cref="System.Type"/> to be used when determining the return system type. 
 	/// This property is particularly useful when the markup extension is applied outside a XAML page, such as in an App.cs or style file. 
@@ -79,7 +77,7 @@ public class OnScreenSizeExtension : IMarkupExtension<object>
 	/// <remarks>
 	/// If <see cref="Base"/> is defined, this value must correspond to a scale factor. It allows scaling the <see cref="Base"/>'s value based on the scale factor defined here.
 	/// </remarks>
-	public object Default { get; set; } 
+	public object Default { get; set; }
 
 
 	/// <summary>
@@ -93,7 +91,79 @@ public class OnScreenSizeExtension : IMarkupExtension<object>
 		get => categoryPropertyValues[ScreenCategories.ExtraSmall]!;
 		set => categoryPropertyValues[ScreenCategories.ExtraSmall] = value;
 	}
-	
+
+	/// <summary>
+	/// Specifies the value for devices with a Mini screen size.
+	/// </summary>
+	public object Mini
+	{
+		get => categoryPropertyValues[ScreenCategories.Mini]!;
+		set => categoryPropertyValues[ScreenCategories.Mini] = value;
+	}
+
+	/// <summary>
+	/// Specifies the value for devices with a SmallPlus screen size.
+	/// </summary>
+	public object SmallPlus
+	{
+		get => categoryPropertyValues[ScreenCategories.SmallPlus]!;
+		set => categoryPropertyValues[ScreenCategories.SmallPlus] = value;
+	}
+
+	/// <summary>
+	/// Specifies the value for devices with a MediumPlus screen size.
+	/// </summary>
+	public object MediumPlus
+	{
+		get => categoryPropertyValues[ScreenCategories.MediumPlus]!;
+		set => categoryPropertyValues[ScreenCategories.MediumPlus] = value;
+	}
+
+	/// <summary>
+	/// Specifies the value for devices with a LargePlus screen size.
+	/// </summary>
+	public object LargePlus
+	{
+		get => categoryPropertyValues[ScreenCategories.LargePlus]!;
+		set => categoryPropertyValues[ScreenCategories.LargePlus] = value;
+	}
+
+	/// <summary>
+	/// Specifies the value for devices with an ExtraExtraLarge screen size.
+	/// </summary>
+	public object ExtraExtraLarge
+	{
+		get => categoryPropertyValues[ScreenCategories.ExtraExtraLarge]!;
+		set => categoryPropertyValues[ScreenCategories.ExtraExtraLarge] = value;
+	}
+
+	/// <summary>
+	/// Specifies the value for devices with a Jumbo screen size.
+	/// </summary>
+	public object Jumbo
+	{
+		get => categoryPropertyValues[ScreenCategories.Jumbo]!;
+		set => categoryPropertyValues[ScreenCategories.Jumbo] = value;
+	}
+
+	/// <summary>
+	/// Specifies the value for devices with a SuperJumbo screen size.
+	/// </summary>
+	public object SuperJumbo
+	{
+		get => categoryPropertyValues[ScreenCategories.SuperJumbo]!;
+		set => categoryPropertyValues[ScreenCategories.SuperJumbo] = value;
+	}
+
+	/// <summary>
+	/// Specifies the value for devices with a Giant screen size.
+	/// </summary>
+	public object Giant
+	{
+		get => categoryPropertyValues[ScreenCategories.Giant]!;
+		set => categoryPropertyValues[ScreenCategories.Giant] = value;
+	}
+
 	/// <summary>
 	/// Specifies the value for devices with an Small screen size. It's applied when the device's physical screen size falls into the Small category.
 	/// </summary>
@@ -142,9 +212,7 @@ public class OnScreenSizeExtension : IMarkupExtension<object>
 		set => categoryPropertyValues[ScreenCategories.ExtraLarge] = value;
 	}
 
-	
 
-	
 	/// <summary>
 	/// Xaml internal usage
 	/// </summary>
@@ -177,9 +245,7 @@ public class OnScreenSizeExtension : IMarkupExtension<object>
 		var value = ResolveStaticResource(serviceProvider,
 			ExtractValueBasedOnScreenCategory(screenCategoryProvider.GetCategory()));
 
-
 		return value!.ConvertTo(propertyType, bp!);
-
 	}
 
 
@@ -188,21 +254,27 @@ public class OnScreenSizeExtension : IMarkupExtension<object>
 	/// corresponding to the current screen category. If a specific size category is not set, the Default value is used.
 	/// </summary>
 	private object GetScaledValue(IServiceProvider serviceProvider)
-    {
-    	ValidateBaseSizeDependentProperties();
-	    
-    	var result = screenSizeHelpers.GetScreenSizeScaled(
-    		(IConvertible)Base!, 
-		    ConvertToDouble(ExtraSmall),
-		    ConvertToDouble(Small),
-		    ConvertToDouble(Medium),
-		    ConvertToDouble(Large),
-		    ConvertToDouble(ExtraLarge));
-	   
-	    var bp = GetBindableProperty(serviceProvider, out var propertyType);
-	    
-	    return result!.ConvertTo(propertyType, bp!);
-    }
+	{
+		ValidateBaseSizeDependentProperties();
+
+		var result = screenSizeHelpers.GetScreenSizeScaled(
+			(IConvertible)Base!,
+			ConvertToDouble(Mini),
+			ConvertToDouble(ExtraSmall),
+			ConvertToDouble(Small),
+			ConvertToDouble(SmallPlus),
+			ConvertToDouble(Medium),
+			ConvertToDouble(MediumPlus),
+			ConvertToDouble(Large),
+			ConvertToDouble(LargePlus),
+			ConvertToDouble(ExtraLarge),
+			ConvertToDouble(ExtraExtraLarge),
+			ConvertToDouble(Jumbo));
+
+		var bp = GetBindableProperty(serviceProvider, out var propertyType);
+
+		return result!.ConvertTo(propertyType, bp!);
+	}
 
 	private double ConvertToDouble(object value)
 	{
@@ -216,9 +288,10 @@ public class OnScreenSizeExtension : IMarkupExtension<object>
 
 	private Type DeterminePropertyType(BindableProperty? bp, PropertyInfo? pi)
 	{
-		return bp?.ReturnType ?? pi?.PropertyType ?? FallbackType ?? throw new InvalidOperationException($"Could not infer the return type for the property that you are applying the markup to. Please ensure that the property has a valid return type and that it is accessible. In some cases, you may need to set the \"{nameof(FallbackType)}\" property explicitly to specify the return type of the property. If you continue to experience this issue, please review your code and try again.");
+		return bp?.ReturnType ?? pi?.PropertyType ?? FallbackType ?? throw new InvalidOperationException(
+			$"Could not infer the return type for the property that you are applying the markup to. Please ensure that the property has a valid return type and that it is accessible. In some cases, you may need to set the \"{nameof(FallbackType)}\" property explicitly to specify the return type of the property. If you continue to experience this issue, please review your code and try again.");
 	}
-	
+
 
 	private BindableProperty? GetBindableProperty(IServiceProvider serviceProvider, out Type propertyType)
 	{
@@ -244,14 +317,14 @@ public class OnScreenSizeExtension : IMarkupExtension<object>
 		}
 
 		LogHelpers.WriteLine(
-			$"Providing Value using propertyType:\"{(bp?.ReturnType ?? pi?.PropertyType ?? null)}\" and BindableProperty:{(bp ?? null)}",
+			$"Providing Value using propertyType:\"{bp?.ReturnType ?? pi?.PropertyType ?? null}\" and BindableProperty:{bp ?? null}",
 			LogLevels.Verbose);
 
 		propertyType = DeterminePropertyType(bp, pi);
 		return bp;
 	}
 
-	
+
 	/// <summary>
 	/// Extracts a value based on the current screen category, taking into account the different size categories.
 	/// </summary>
@@ -273,14 +346,16 @@ public class OnScreenSizeExtension : IMarkupExtension<object>
 
 		if (Default == defaultNull)
 		{
-			throw new XamlParseException(string.Format("{0} requires property {0}.{1} defined to use as fallback as property {0}.{2} was not set.", nameof(OnScreenSizeExtension), nameof(Default), category.ToString()));
+			throw new XamlParseException(string.Format(
+				"{0} requires property {0}.{1} defined to use as fallback as property {0}.{2} was not set.",
+				nameof(OnScreenSizeExtension), nameof(Default), category.ToString()));
 		}
+
 		return Default;
 	}
 
 	private static object ResolveStaticResource(IServiceProvider serviceProvider, object value)
 	{
-
 		if (value is StaticResourceExtension staticResource)
 		{
 			var resolvedValue = staticResource.ProvideValue(serviceProvider);
@@ -304,9 +379,8 @@ public class OnScreenSizeExtension : IMarkupExtension<object>
 
 		return value;
 	}
-	
-	
-	
+
+
 	/// <summary>
 	/// Validates the properties ExtraSmall, Small, Medium, Large, and ExtraLarge to ensure they are of type int or double
 	/// when the BaseSize property is provided. Throws an exception if the validation fails.
@@ -318,16 +392,17 @@ public class OnScreenSizeExtension : IMarkupExtension<object>
 		{
 			throw new ArgumentException($"The property {nameof(Base)} must be defined for scaled size to work.");
 		}
-		
-		
-		if (Base is not IConvertible )
+
+
+		if (Base is not IConvertible)
 		{
-			throw new ArgumentException($"The property {nameof(Base)} must be a primitive number such as int, double, int64, short, decimal, and etc.");
+			throw new ArgumentException(
+				$"The property {nameof(Base)} must be a primitive number such as int, double, int64, short, decimal, and etc.");
 		}
 
-		
 
-		var propertiesToCheck = new Dictionary<string, object> {
+		var propertiesToCheck = new Dictionary<string, object>
+		{
 			{ nameof(ExtraSmall), ExtraSmall },
 			{ nameof(Small), Small },
 			{ nameof(Medium), Medium },
@@ -335,11 +410,14 @@ public class OnScreenSizeExtension : IMarkupExtension<object>
 			{ nameof(ExtraLarge), ExtraLarge }
 		};
 
-		var defaultHasExpectedType = (Default is int || Default is double || (Default is string defaultString && (int.TryParse(defaultString, out _) || double.TryParse(defaultString, out _))));
-		bool anyPropertyFilled = propertiesToCheck.Any(entry => entry.Value != defaultNull);
+		var defaultHasExpectedType = Default is int || Default is double || (Default is string defaultString &&
+		                                                                     (int.TryParse(defaultString, out _) ||
+		                                                                      double.TryParse(defaultString, out _)));
+		var anyPropertyFilled = propertiesToCheck.Any(entry => entry.Value != defaultNull);
 		if (!anyPropertyFilled && !defaultHasExpectedType)
 		{
-			throw new ArgumentException($"The property {nameof(Default)} must be of type int or double when {nameof(Base)} is provided and no other properties are provided. Current type of property {nameof(Default)} is \"{Default.GetType().FullName}\" ");
+			throw new ArgumentException(
+				$"The property {nameof(Default)} must be of type int or double when {nameof(Base)} is provided and no other properties are provided. Current type of property {nameof(Default)} is \"{Default.GetType().FullName}\" ");
 		}
 
 		foreach (var entry in propertiesToCheck)
@@ -347,12 +425,15 @@ public class OnScreenSizeExtension : IMarkupExtension<object>
 			// Só validar a propriedade se ela foi preenchida (diferente de defaultNull)
 			if (entry.Value != defaultNull && !(entry.Value is int || entry.Value is double))
 			{
-				if (entry.Value is string stringValue && (Single.TryParse(stringValue, out _) || double.TryParse(stringValue, out _) || int.TryParse(stringValue, out _)))
+				if (entry.Value is string stringValue && (float.TryParse(stringValue, out _) ||
+				                                          double.TryParse(stringValue, out _) ||
+				                                          int.TryParse(stringValue, out _)))
 				{
 					continue; // O valor é uma string representando um número, então continuamos o loop.
 				}
-        
-				throw new ArgumentException($"The property {entry.Key} must be of type int or double or a string representing those types when {nameof(Base)} is provided and the property has been filled.");
+
+				throw new ArgumentException(
+					$"The property {entry.Key} must be of type int or double or a string representing those types when {nameof(Base)} is provided and the property has been filled.");
 			}
 		}
 	}
