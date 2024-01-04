@@ -8,7 +8,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E300C3CF-563B-41EE-B335-E42B8B62FC2A}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
-		global.json = global.json
 		Directory.Build.props = Directory.Build.props
 	EndProjectSection
 EndProject
