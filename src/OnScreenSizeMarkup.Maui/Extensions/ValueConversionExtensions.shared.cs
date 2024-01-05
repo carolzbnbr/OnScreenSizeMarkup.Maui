@@ -81,9 +81,12 @@ internal static class ValueConversionExtensions
         {
 	        converter = (TypeConverter)new Microsoft.Maui.Converters.CornerRadiusTypeConverter();
 	        ValueConversionExtensions.converter.Add(toType, converter);
-	        var value1 = converter.ConvertFromInvariantString((string)value!);
+	        string valueAsString = ConvertNumberToString(value);
+	        var value1 = converter.ConvertFromInvariantString(valueAsString);
 	        return value1!;
         }
+
+        
         
         if (toType == typeof(Thickness))
         {
@@ -122,5 +125,28 @@ internal static class ValueConversionExtensions
         return returnValue;
     }
 
+	public static string ConvertNumberToString(object? value)
+	{
+		if (value is null)
+		{
+			return string.Empty;
+		}
 
+		return value switch
+		{
+			string stringValue => stringValue,
+			double doubleValue => doubleValue.ToString(CultureInfo.InvariantCulture),
+			int intValue => intValue.ToString(),
+			long longValue => longValue.ToString(),
+			float floatValue => floatValue.ToString(CultureInfo.InvariantCulture),
+			decimal decimalValue => decimalValue.ToString(CultureInfo.InvariantCulture),
+			short shortValue => shortValue.ToString(),
+			byte byteValue => byteValue.ToString(),
+			uint uintValue => uintValue.ToString(),
+			ulong ulongValue => ulongValue.ToString(),
+			ushort ushortValue => ushortValue.ToString(),
+			sbyte sbyteValue => sbyteValue.ToString(),
+			_ => throw new ArgumentException("The provided value is not a recognized numeric type.")
+		};
+	}
 }
