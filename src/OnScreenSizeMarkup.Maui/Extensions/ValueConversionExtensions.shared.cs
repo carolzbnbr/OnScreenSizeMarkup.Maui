@@ -124,7 +124,7 @@ internal static class ValueConversionExtensions
         return returnValue;
     }
 
-	private static object ConvertValue(object value, TypeConverter converter)
+	static object ConvertValue(object value, TypeConverter converter)
 	{
 		object returnValue;
 		string valueAsString;
