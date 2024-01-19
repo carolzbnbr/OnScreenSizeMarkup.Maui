@@ -39,11 +39,10 @@ internal static class ValueConversionExtensions
 		}
 
 		object returnValue;
-        if (ValueConversionExtensions.converter.TryGetValue(toType, out var converter))
-        {
-            returnValue = converter.ConvertFromInvariantString((string)value!)!;
-            return returnValue;
-        }
+		if (ValueConversionExtensions.converter.TryGetValue(toType, out var converter))
+		{
+			return ConvertValue(value, converter);
+		}
 
         if (toType.IsEnum)
         {
@@ -124,6 +123,24 @@ internal static class ValueConversionExtensions
         returnValue = Convert.ChangeType(value, toType, CultureInfo.InvariantCulture)!;
         return returnValue;
     }
+
+	private static object ConvertValue(object value, TypeConverter converter)
+	{
+		object returnValue;
+		string valueAsString;
+
+		if (value is string stringValue)
+		{
+			valueAsString = stringValue;
+		}
+		else
+		{
+			valueAsString = ConvertNumberToString(value);
+		}
+
+		returnValue = converter.ConvertFromInvariantString(valueAsString)!;
+		return returnValue;
+	}
 
 	public static string ConvertNumberToString(object? value)
 	{
