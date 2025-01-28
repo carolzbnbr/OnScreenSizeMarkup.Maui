@@ -101,7 +101,7 @@ using OnScreenSizeMarkup.Maui.Mappings;
 
 public App()
 {
-            Manager.Mappings = new List<SizeMappingInfo>
+            Manager.Current.Mappings = new List<SizeMappingInfo>
             {
                 new SizeMappingInfo(3.9, ScreenCategories.ExtraSmall, ScreenSizeCompareModes.SmallerOrEqualsTo),
                 new SizeMappingInfo(4.9, ScreenCategories.Small, ScreenSizeCompareModes.SmallerOrEqualsTo),
@@ -141,8 +141,8 @@ You can apply it to most UI View elements such as Labels, Grids, Buttons, ImageB
 ```xml
 <ContentPage xmlns:markups="clr-namespace:OnScreenSizeMarkup.Forms;assembly=OnScreenSizeMarkup.Forms">
     <ContentPage.Content>
-        <Grid RowDefinitions="{markups:OnScreenSize Large='200, *, 200', ExtraLarge='300, *, 300', DefaultSize='100, *, 100'}">
-            <Label Padding="{markups:OnScreenSize Medium='15, 15, 0, 0', Large='20, 20, 0, 0', DefaultSize='10, 10, 0, 0'}" Text="Hello" TextColor="White" />
+        <Grid RowDefinitions="{markups:OnScreenSize Large='200, *, 200', ExtraLarge='300, *, 300', Default='100, *, 100'}">
+            <Label Padding="{markups:OnScreenSize Medium='15, 15, 0, 0', Large='20, 20, 0, 0', Default='10, 10, 0, 0'}" Text="Hello" TextColor="White" />
         </Grid>
     </ContentPage.Content>
 </ContentPage>
@@ -263,7 +263,7 @@ public MainPage()
     grid.Children.Add(new Label
     {
         Text = "Hello",
-        Padding = OnScreenSizeHelpers.Instance.GetScreenSizeValue(default: new Thickness(10, 10, 0, 0), medium: new Thickness(15, 15, 0, 0), large: new Thickness(20, 20, 0, 0))
+        Padding = OnScreenSizeHelpers.Instance.GetScreenSizeValue(defaultSize: new Thickness(10, 10, 0, 0), medium: new Thickness(15, 15, 0, 0), large: new Thickness(20, 20, 0, 0))
     });
     Content = grid;
 }
