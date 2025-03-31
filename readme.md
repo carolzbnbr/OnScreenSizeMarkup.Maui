@@ -61,10 +61,10 @@ Screen are grouped into six categories, allowing for precise UI control. You can
 The markup extension has many properties which will be eligible to be used based on the categorized screen size
 
 * `ExtraSmall` - Applied when the device screen size is categorized as ExtraSmall
-* `Small` - Applied when the device screen size is categorized as ExtraSmall
-* `Medium` - Applied when the device screen size is categorized as ExtraSmall
-* `Large` - Applied when the device screen size is categorized as ExtraSmall
-* `ExtraLarge` - Applied when the device screen size is categorized as ExtraSmall
+* `Small` - Applied when the device screen size is categorized as Small
+* `Medium` - Applied when the device screen size is categorized as Medium
+* `Large` - Applied when the device screen size is categorized as Large
+* `ExtraLarge` - Applied when the device screen size is categorized as ExtraLarge
 * `Default` - Applied when one of the required property above is missing
 
 * `Base` - This is a special property, used in conjunction with the previous ones. 
@@ -294,4 +294,4 @@ All you have to do is specify a ***Base*** and the scaling factor for each categ
 
 ```
 In the above example we are defining a base font size of 14, and scaling factor for each category.
-So, if the device is categorized as ExtraSmall, the font size will be 14*1 = 14, if it is categorized as Small, the font size will be 14*1.2 = 16.8, and so on.
+So, if the device is categorized as ExtraSmall, the font size will be 14\*1 = 14, if it is categorized as Small, the font size will be 14\*1.2 = 16.8, and so on.
