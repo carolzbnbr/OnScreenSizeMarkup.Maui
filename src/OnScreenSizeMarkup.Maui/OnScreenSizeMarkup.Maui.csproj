@@ -1,8 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  
   <PropertyGroup>
-    <TargetFrameworks>net6.0;net6.0-android;net6.0-ios;net6.0-maccatalyst;</TargetFrameworks>
-    <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net6.0-windows10.0.19041.0</TargetFrameworks>
+    <TargetFrameworks>net9.0;net9.0-android;net9.0-ios;net9.0-maccatalyst;</TargetFrameworks>
+    <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net9.0-windows10.0.19041.0</TargetFrameworks>
     <UseMaui>true</UseMaui>
     <SingleProject>true</SingleProject>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
@@ -10,42 +9,35 @@
     <CompilerGeneratedFilesOutputPath>$(BaseIntermediateOutputPath)\GeneratedFiles</CompilerGeneratedFilesOutputPath>
 
     <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">14.2</SupportedOSPlatformVersion>
-    <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">14.0</SupportedOSPlatformVersion>
+    <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">15.0</SupportedOSPlatformVersion>
     <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
     <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
     <TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
-
   </PropertyGroup>
-  
+
   <PropertyGroup>
       <PublishTrimmed>false</PublishTrimmed>
   </PropertyGroup>
-  
-  
+
   <ItemGroup>
     <InternalsVisibleTo Include="Samples" />
     <InternalsVisibleTo Include="OnScreenSizeMarkup.Maui.Tests" />
   </ItemGroup>
 
-  <ItemGroup Condition="$(TargetFramework.StartsWith('Xamarin.iOS')) != true AND $(TargetFramework.StartsWith('net6.0-ios')) != true AND $(TargetFramework.StartsWith('net6.0-maccatalyst')) != true ">
+  <ItemGroup Condition="$(TargetFramework.StartsWith('Xamarin.iOS')) != true AND $(TargetFramework.StartsWith('net9.0-ios')) != true">
     <Compile Remove="**\**\*.ios.cs" />
     <None Include="**\**\*.ios.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
     <Compile Remove="**\ios\**\*.cs" />
     <None Include="**\ios\**\*.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
     <None Remove="Arquivo Comprimido.zip" />
   </ItemGroup>
-  <ItemGroup Condition="$(TargetFramework.StartsWith('Xamarin.Mac')) != true ">
+  <ItemGroup Condition="$(TargetFramework.StartsWith('Xamarin.Mac')) != true AND $(TargetFramework.StartsWith('net9.0-maccatalyst')) != true">
     <Compile Remove="**\*.macos.cs" />
+    <None Include="**\*.macos.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
     <Compile Remove="**\macos\**\*.cs" />
     <None Include="**\macos\**\*.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
   </ItemGroup>
-  <ItemGroup Condition="$(TargetFramework.StartsWith('Xamarin.Mac')) != true AND $(TargetFramework.StartsWith('Xamarin.iOS')) != true AND $(TargetFramework.StartsWith('net6.0-ios')) != true AND $(TargetFramework.StartsWith('net6.0-maccatalyst')) != true">
-    <Compile Remove="**\*.macios.cs" />
-    <None Include="**\*.macios.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
-    <Compile Remove="**\macios\**\*.cs" />
-    <None Include="**\macios\**\*.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
-  </ItemGroup>
-  <ItemGroup Condition="$(TargetFramework.StartsWith('MonoAndroid')) != true AND $(TargetFramework.StartsWith('net6.0-android')) != true ">
+  <ItemGroup Condition="$(TargetFramework.StartsWith('MonoAndroid')) != true AND $(TargetFramework.StartsWith('net9.0-android')) != true ">
     <Compile Remove="**\**\*.android.cs" />
     <None Include="**\**\*.android.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
     <Compile Remove="**\android\**\*.cs" />
@@ -57,13 +49,12 @@
     <Compile Remove="**\windows\**\*.cs" />
     <None Include="**\windows\**\*.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
   </ItemGroup>
+
   <ItemGroup>
     <PackageReference Include="Nerdbank.GitVersioning" Version="3.6.133">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.Maui.Controls" Version="9.0.110" />
   </ItemGroup>
- 
-
-
 </Project>

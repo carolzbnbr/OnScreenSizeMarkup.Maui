@@ -1,19 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Reflection;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Maui.Controls;
-using Microsoft.Maui.Controls.Xaml;
-using Microsoft.Maui.Graphics.Text;
-using OnScreenSizeMarkup.Maui.Categories;
-using OnScreenSizeMarkup.Maui.Extensions;
-using OnScreenSizeMarkup.Maui.Helpers;
 using OnScreenSizeMarkup.Maui.Providers;
-using ServiceProvider = OnScreenSizeMarkup.Maui.Helpers.ServiceProvider;
 
 namespace OnScreenSizeMarkup.Maui;
 
@@ -24,6 +12,7 @@ namespace OnScreenSizeMarkup.Maui;
 /// </summary>
 [SuppressMessage("Style", "IDE0040:Adicionar modificadores de acessibilidade")]
 [SuppressMessage("ReSharper", "UseStringInterpolation")]
+[RequireService([typeof(IProvideValueTarget)])]
 public class OnScreenSizeExtension : IMarkupExtension<object>
 {
 	static readonly object defaultNull = new();
@@ -54,21 +43,21 @@ public class OnScreenSizeExtension : IMarkupExtension<object>
 		this.FallbackType = null!;
 	}
 
-	
+
 	/// <summary>
-	/// Gets or sets the fallback <see cref="System.Type"/> to be used when determining the return system type. 
-	/// This property is particularly useful when the markup extension is applied outside a XAML page, such as in an App.cs or style file. 
-	/// It ensures that the return type can be correctly inferred even when the conventional methods of determining it fail. 
+	/// Gets or sets the fallback <see cref="System.Type"/> to be used when determining the return system type.
+	/// This property is particularly useful when the markup extension is applied outside a XAML page, such as in an App.cs or style file.
+	/// It ensures that the return type can be correctly inferred even when the conventional methods of determining it fail.
 	/// By providing the fallback type explicitly, you can avoid potential issues related to type inference, thereby enhancing the robustness of your code.
 	/// </summary>
 	public Type? FallbackType { get; set; }
 
 	/// <summary>
-	/// The base value that serves as a reference point for scaling according to the physical screen size of the device. 
+	/// The base value that serves as a reference point for scaling according to the physical screen size of the device.
 	/// If this property is specified, it will be multiplied by a specific factor that corresponds to one of the following properties:
-	/// <see cref="ExtraSmall"/>, <see cref="Small"/>, <see cref="Medium"/>, <see cref="Large"/>, or <see cref="ExtraLarge"/>, 
+	/// <see cref="ExtraSmall"/>, <see cref="Small"/>, <see cref="Medium"/>, <see cref="Large"/>, or <see cref="ExtraLarge"/>,
 	/// depending on the device's categorized screen size. If this property is not specified, the aforementioned properties will be used
-	/// directly to return the values defined in them, depending on the determined categorization. The usage of this property aids in 
+	/// directly to return the values defined in them, depending on the determined categorization. The usage of this property aids in
 	/// providing a consistent and responsive layout across different devices.
 	/// </summary>
 	public object? Base { get; set; }
@@ -79,7 +68,7 @@ public class OnScreenSizeExtension : IMarkupExtension<object>
 	/// <remarks>
 	/// If <see cref="Base"/> is defined, this value must correspond to a scale factor. It allows scaling the <see cref="Base"/>'s value based on the scale factor defined here.
 	/// </remarks>
-	public object Default { get; set; } 
+	public object Default { get; set; }
 
 
 	/// <summary>
@@ -93,7 +82,7 @@ public class OnScreenSizeExtension : IMarkupExtension<object>
 		get => categoryPropertyValues[ScreenCategories.ExtraSmall]!;
 		set => categoryPropertyValues[ScreenCategories.ExtraSmall] = value;
 	}
-	
+
 	/// <summary>
 	/// Specifies the value for devices with an Small screen size. It's applied when the device's physical screen size falls into the Small category.
 	/// </summary>
@@ -142,9 +131,9 @@ public class OnScreenSizeExtension : IMarkupExtension<object>
 		set => categoryPropertyValues[ScreenCategories.ExtraLarge] = value;
 	}
 
-	
 
-	
+
+
 	/// <summary>
 	/// Xaml internal usage
 	/// </summary>
@@ -164,7 +153,7 @@ public class OnScreenSizeExtension : IMarkupExtension<object>
 	}
 
 	/// <summary>
-	/// 
+	///
 	/// </summary>
 	/// <param name="serviceProvider"></param>
 	/// <returns></returns>
@@ -184,23 +173,23 @@ public class OnScreenSizeExtension : IMarkupExtension<object>
 
 
 	/// <summary>
-	/// Calculates the scaled <see cref="Base"/>'s value depending on the screen size category, by multiplying the <see cref="Base"/> by the value 
+	/// Calculates the scaled <see cref="Base"/>'s value depending on the screen size category, by multiplying the <see cref="Base"/> by the value
 	/// corresponding to the current screen category. If a specific size category is not set, the Default value is used.
 	/// </summary>
 	private object GetScaledValue(IServiceProvider serviceProvider)
     {
     	ValidateBaseSizeDependentProperties();
-	    
+
     	var result = screenSizeHelpers.GetScreenSizeScaled(
-    		(IConvertible)Base!, 
+    		(IConvertible)Base!,
 		    ConvertToDouble(ExtraSmall),
 		    ConvertToDouble(Small),
 		    ConvertToDouble(Medium),
 		    ConvertToDouble(Large),
 		    ConvertToDouble(ExtraLarge));
-	   
+
 	    var bp = GetBindableProperty(serviceProvider, out var propertyType);
-	    
+
 	    return result!.ConvertTo(propertyType, bp!);
     }
 
@@ -218,7 +207,7 @@ public class OnScreenSizeExtension : IMarkupExtension<object>
 	{
 		return bp?.ReturnType ?? pi?.PropertyType ?? FallbackType ?? throw new InvalidOperationException($"Could not infer the return type for the property that you are applying the markup to. Please ensure that the property has a valid return type and that it is accessible. In some cases, you may need to set the \"{nameof(FallbackType)}\" property explicitly to specify the return type of the property. If you continue to experience this issue, please review your code and try again.");
 	}
-	
+
 
 	private BindableProperty? GetBindableProperty(IServiceProvider serviceProvider, out Type propertyType)
 	{
@@ -251,7 +240,7 @@ public class OnScreenSizeExtension : IMarkupExtension<object>
 		return bp;
 	}
 
-	
+
 	/// <summary>
 	/// Extracts a value based on the current screen category, taking into account the different size categories.
 	/// </summary>
@@ -304,9 +293,9 @@ public class OnScreenSizeExtension : IMarkupExtension<object>
 
 		return value;
 	}
-	
-	
-	
+
+
+
 	/// <summary>
 	/// Validates the properties ExtraSmall, Small, Medium, Large, and ExtraLarge to ensure they are of type int or double
 	/// when the BaseSize property is provided. Throws an exception if the validation fails.
@@ -318,14 +307,14 @@ public class OnScreenSizeExtension : IMarkupExtension<object>
 		{
 			throw new ArgumentException($"The property {nameof(Base)} must be defined for scaled size to work.");
 		}
-		
-		
+
+
 		if (Base is not IConvertible )
 		{
 			throw new ArgumentException($"The property {nameof(Base)} must be a primitive number such as int, double, int64, short, decimal, and etc.");
 		}
 
-		
+
 
 		var propertiesToCheck = new Dictionary<string, object> {
 			{ nameof(ExtraSmall), ExtraSmall },
@@ -351,7 +340,7 @@ public class OnScreenSizeExtension : IMarkupExtension<object>
 				{
 					continue; // O valor é uma string representando um número, então continuamos o loop.
 				}
-        
+
 				throw new ArgumentException($"The property {entry.Key} must be of type int or double or a string representing those types when {nameof(Base)} is provided and the property has been filled.");
 			}
 		}
