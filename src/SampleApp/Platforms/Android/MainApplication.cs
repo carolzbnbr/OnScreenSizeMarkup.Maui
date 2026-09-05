@@ -1,7 +1,7 @@
 ﻿using Android.App;
 using Android.Runtime;
 
-namespace OnScreeenSizeMarkup.Sample;
+namespace SampleApp;
 
 [Application]
 public class MainApplication : MauiApplication

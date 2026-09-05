@@ -1,7 +1,7 @@
 ﻿using ObjCRuntime;
 using UIKit;
 
-namespace OnScreeenSizeMarkup.Sample;
+namespace SampleApp;
 
 public class Program
 {

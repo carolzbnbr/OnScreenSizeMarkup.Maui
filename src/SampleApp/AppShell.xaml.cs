@@ -1,4 +1,4 @@
-﻿namespace OnScreeenSizeMarkup.Sample;
+﻿namespace SampleApp;
 
 public partial class AppShell : Shell
 {

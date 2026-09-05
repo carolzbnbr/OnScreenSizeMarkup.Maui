@@ -1,3 +1,5 @@
+#if ANDROID
+
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using Android.Content;
@@ -12,18 +14,17 @@ using Point = Android.Graphics.Point;
 
 namespace OnScreenSizeMarkup.Maui.PlatformDensities;
 
-#if ANDROID
 [SuppressMessage("Style", "IDE0040:Adicionar modificadores de acessibilidade")]
 internal static partial class ScreenDensityPlatform 
 {
-	public static (double xdpi, double ydpi) GetPixelPerInches()
+	public static partial  (double xdpi, double ydpi) GetPixelPerInches()
 	{
 		var displayMetrics = Android.App.Application.Context.Resources?.DisplayMetrics;
 		
 		return (displayMetrics?.Xdpi ?? 0, displayMetrics?.Ydpi ?? 0);
 	}
 
-	public static (double width, double height) GetNativeScreenResolution()
+	public static partial (double width, double height) GetNativeScreenResolution()
 	{
 		var displayMetrics = new DisplayMetrics();
 		var windowManager = Android.App.Application.Context.GetSystemService(Context.WindowService).JavaCast<IWindowManager>();

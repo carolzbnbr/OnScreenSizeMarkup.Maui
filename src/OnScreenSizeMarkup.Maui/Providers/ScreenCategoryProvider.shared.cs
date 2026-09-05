@@ -36,6 +36,9 @@ public class ScreenCategoryProvider : IScreenCategoryProvider
 		}
 	}
 	
+	/// <summary>
+	/// </summary>
+	/// <returns></returns>
 	public ScreenCategories GetCategory()
 	{
 		if (TryGetCategory(out var category))

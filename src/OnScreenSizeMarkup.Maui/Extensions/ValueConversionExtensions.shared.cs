@@ -1,8 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Globalization;
 using System.Reflection;
-using OnScreenSizeMarkup.Maui.Categories;
-using OnScreenSizeMarkup.Maui.Helpers;
 
 namespace  OnScreenSizeMarkup.Maui.Extensions;
 

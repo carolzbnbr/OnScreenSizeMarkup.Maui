@@ -1,6 +1,6 @@
 ﻿using Foundation;
 
-namespace OnScreeenSizeMarkup.Sample;
+namespace SampleApp;
 
 [Register("AppDelegate")]
 public class AppDelegate : MauiUIApplicationDelegate

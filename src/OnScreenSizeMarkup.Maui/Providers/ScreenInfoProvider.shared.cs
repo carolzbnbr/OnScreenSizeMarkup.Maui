@@ -1,6 +1,3 @@
-using OnScreenSizeMarkup.Maui.Categories;
-using OnScreenSizeMarkup.Maui.Helpers;
-using OnScreenSizeMarkup.Maui.PlatformDensities;
 
 namespace OnScreenSizeMarkup.Maui.Providers;
 

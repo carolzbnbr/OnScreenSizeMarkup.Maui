@@ -1,3 +1,4 @@
+#if IOS
 using OnScreenSizeMarkup.Maui.Extensions;
 using OnScreenSizeMarkup.Maui.Helpers;
 using Microsoft.Maui.Platform;
@@ -8,17 +9,15 @@ using AVFoundation;
 using CoreMedia;
 using MediaPlayer;
 using CoreGraphics;
+// ReSharper disable All
 #pragma warning disable CS8603
+#pragma warning disable IDE0040
 
 namespace OnScreenSizeMarkup.Maui.PlatformDensities;
 
-
-#if IOS
-
-
 internal static partial  class ScreenDensityPlatform 
 {
-	public static (double xdpi, double ydpi) GetPixelPerInches()
+	public static partial (double xdpi, double ydpi) GetPixelPerInches()
 	{
 
 		var BoundsWidth = UIScreen.MainScreen.Bounds.Width;
@@ -31,7 +30,7 @@ internal static partial  class ScreenDensityPlatform
 		return (ppi, ppi);
 	}
 
-	public static (double width, double height) GetNativeScreenResolution()
+	public static partial (double width, double height) GetNativeScreenResolution()
 	{
 		return (UIScreen.MainScreen.NativeBounds.Width, UIScreen.MainScreen.NativeBounds.Height);
 	}

@@ -1,12 +1,12 @@
+#if MACCATALYST
 using OnScreenSizeMarkup.Maui.Extensions;
 using UIKit;
 
 namespace OnScreenSizeMarkup.Maui.PlatformDensities;
 
-#if MACCATALYST
 internal static partial class ScreenDensityPlatform 
 {
-	public static (double xdpi, double ydpi) GetPixelPerInches()
+	public static partial (double xdpi, double ydpi) GetPixelPerInches()
 	{
 		var displayInfo = Microsoft.Maui.Devices.DeviceDisplay.Current.MainDisplayInfo;
 		
@@ -25,9 +25,10 @@ internal static partial class ScreenDensityPlatform
 		return (dpi, dpi);
 	}
 
-	public static (double width, double height) GetNativeScreenResolution()
+	public static partial (double width, double height) GetNativeScreenResolution()
 	{
 		return (UIScreen.MainScreen.NativeBounds.Width, UIScreen.MainScreen.NativeBounds.Height);
 	}
 }
+
 #endif

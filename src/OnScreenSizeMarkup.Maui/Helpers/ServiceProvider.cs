@@ -1,5 +1,6 @@
-using Microsoft.Extensions.DependencyInjection;
-
+#if NET9_0_OR_GREATER
+	using Microsoft.Extensions.DependencyInjection;
+#endif
 namespace OnScreenSizeMarkup.Maui.Helpers;
 
 
@@ -11,15 +12,17 @@ static class ServiceProvider
 	{
 		get
 		{
-#if WINDOWS10_0_17763_0_OR_GREATER
-    return MauiWinUIApplication.Current.Services;
-#elif ANDROID
-    return MauiApplication.Current.Services;
-#elif IOS || MACCATALYST
-    return MauiUIApplicationDelegate.Current.Services;
-#else
-			return null!;
-#endif
+			#if NET9_0_OR_GREATER
+				return IPlatformApplication.Current?.Services ?? null!;
+			#else 
+				#if ANDROID
+				    return MauiApplication.Current.Services;
+				#elif IOS || MACCATALYST
+				    return MauiUIApplicationDelegate.Current.Services;
+				#else
+					return null!;
+				#endif
+			#endif
 		}
 		
 	}

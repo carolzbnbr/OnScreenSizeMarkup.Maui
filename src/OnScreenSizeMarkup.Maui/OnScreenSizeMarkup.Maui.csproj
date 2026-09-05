@@ -1,69 +1,82 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  
-  <PropertyGroup>
-    <TargetFrameworks>net6.0;net6.0-android;net6.0-ios;net6.0-maccatalyst;</TargetFrameworks>
-    <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net6.0-windows10.0.19041.0</TargetFrameworks>
-    <UseMaui>true</UseMaui>
-    <SingleProject>true</SingleProject>
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
-    <CompilerGeneratedFilesOutputPath>$(BaseIntermediateOutputPath)\GeneratedFiles</CompilerGeneratedFilesOutputPath>
 
-    <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">14.2</SupportedOSPlatformVersion>
-    <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">14.0</SupportedOSPlatformVersion>
-    <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
-    <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
-    <TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
-
-  </PropertyGroup>
-  
-  <PropertyGroup>
-      <PublishTrimmed>false</PublishTrimmed>
-  </PropertyGroup>
-  
-  
-  <ItemGroup>
-    <InternalsVisibleTo Include="Samples" />
-    <InternalsVisibleTo Include="OnScreenSizeMarkup.Maui.Tests" />
-  </ItemGroup>
-
-  <ItemGroup Condition="$(TargetFramework.StartsWith('Xamarin.iOS')) != true AND $(TargetFramework.StartsWith('net6.0-ios')) != true AND $(TargetFramework.StartsWith('net6.0-maccatalyst')) != true ">
-    <Compile Remove="**\**\*.ios.cs" />
-    <None Include="**\**\*.ios.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
-    <Compile Remove="**\ios\**\*.cs" />
-    <None Include="**\ios\**\*.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
-    <None Remove="Arquivo Comprimido.zip" />
-  </ItemGroup>
-  <ItemGroup Condition="$(TargetFramework.StartsWith('Xamarin.Mac')) != true ">
-    <Compile Remove="**\*.macos.cs" />
-    <Compile Remove="**\macos\**\*.cs" />
-    <None Include="**\macos\**\*.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
-  </ItemGroup>
-  <ItemGroup Condition="$(TargetFramework.StartsWith('Xamarin.Mac')) != true AND $(TargetFramework.StartsWith('Xamarin.iOS')) != true AND $(TargetFramework.StartsWith('net6.0-ios')) != true AND $(TargetFramework.StartsWith('net6.0-maccatalyst')) != true">
-    <Compile Remove="**\*.macios.cs" />
-    <None Include="**\*.macios.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
-    <Compile Remove="**\macios\**\*.cs" />
-    <None Include="**\macios\**\*.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
-  </ItemGroup>
-  <ItemGroup Condition="$(TargetFramework.StartsWith('MonoAndroid')) != true AND $(TargetFramework.StartsWith('net6.0-android')) != true ">
-    <Compile Remove="**\**\*.android.cs" />
-    <None Include="**\**\*.android.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
-    <Compile Remove="**\android\**\*.cs" />
-    <None Include="**\android\**\*.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
-  </ItemGroup>
-  <ItemGroup Condition="$(TargetFramework.Contains('-windows')) != true ">
-    <Compile Remove="**\*.windows.cs" />
-    <None Include="**\*.windows.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
-    <Compile Remove="**\windows\**\*.cs" />
-    <None Include="**\windows\**\*.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="Nerdbank.GitVersioning" Version="3.6.133">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-  </ItemGroup>
- 
+    <PropertyGroup>
+        <TargetFrameworks>net9.0-android;net9.0-ios;net9.0-maccatalyst</TargetFrameworks>
+        <UseMaui>true</UseMaui>
+        <LangVersion>latest</LangVersion>
+        <SingleProject>true</SingleProject>
+        <!--        <ImplicitUsings>enable</ImplicitUsings>-->
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
+        <CompilerGeneratedFilesOutputPath>$(BaseIntermediateOutputPath)\GeneratedFiles</CompilerGeneratedFilesOutputPath>
+        <SkipValidateMauiImplicitPackageReferences>true</SkipValidateMauiImplicitPackageReferences>
+<!--        <PackageId>OnScreenSizeMarkup.Maui</PackageId>-->
+<!--        <RootNamespace>OnScreenSizeMarkup.Maui</RootNamespace>-->
+    </PropertyGroup>
 
 
+
+    <!--  maccatalyst Net 6-->
+    <PropertyGroup Condition="'$(TargetFramework)' == 'net6.0-maccatalyst'">
+        <SupportedOSPlatformVersion>14.0</SupportedOSPlatformVersion>
+    </PropertyGroup>
+
+    <!-- iOS NET6 -->
+    <PropertyGroup Condition="'$(TargetFramework)' == 'net6.0-ios'">
+        <!--    <TargetPlatformVersion>14.2</TargetPlatformVersion>-->
+        <SupportedOSPlatformVersion>14.2</SupportedOSPlatformVersion>
+    </PropertyGroup>
+
+
+
+    <!--  maccatalyst Net 9-->
+    <PropertyGroup Condition="'$(TargetFramework)' == 'net9.0-maccatalyst'">
+        <SupportedOSPlatformVersion>15.0</SupportedOSPlatformVersion>
+    </PropertyGroup>
+
+    <!-- iOS Net 9-->
+    <PropertyGroup Condition="'$(TargetFramework)' == 'net9.0-ios'">
+        <!--    <TargetPlatformVersion>16.0</TargetPlatformVersion>-->
+        <SupportedOSPlatformVersion>15.0</SupportedOSPlatformVersion>
+    </PropertyGroup>
+
+
+
+    <!-- Android NET6 -->
+    <PropertyGroup Condition="'$(TargetFramework)' == 'net6.0-android'">
+        <SupportedOSPlatformVersion>21.0</SupportedOSPlatformVersion>
+        <TargetPlatformVersion>31.0</TargetPlatformVersion>
+        <UseMaui>true</UseMaui>
+    </PropertyGroup>
+
+
+    <!-- Android Net 9 -->
+    <PropertyGroup Condition="'$(TargetFramework)' == 'net9.0-android'">
+        <SupportedOSPlatformVersion>29.0</SupportedOSPlatformVersion>
+        <!--    <TargetPlatformVersion>35.0</TargetPlatformVersion>-->
+    </PropertyGroup>
+
+    <!-- Pacotes para .NET 9 com MAUI 9 -->
+    <ItemGroup Condition="
+    '$(TargetFramework)' == 'net9.0' or 
+    '$(TargetFramework)' == 'net9.0-android' or 
+    '$(TargetFramework)' == 'net9.0-ios' or 
+    '$(TargetFramework)' == 'net9.0-maccatalyst'">
+        <PackageReference Include="Microsoft.Maui.Controls" Version="9.0.10" />
+        <PackageReference Include="Microsoft.Maui.Essentials" Version="9.0.10" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Nerdbank.GitVersioning" Version="3.7.115">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+    </ItemGroup>
+
+    <ItemGroup>
+        <InternalsVisibleTo Include="Samples" />
+        <InternalsVisibleTo Include="OnScreenSizeMarkup.Maui.Tests" />
+    </ItemGroup>
+
+      
 </Project>

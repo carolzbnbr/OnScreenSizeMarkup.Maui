@@ -1,19 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Reflection;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Controls.Xaml;
-using Microsoft.Maui.Graphics.Text;
-using OnScreenSizeMarkup.Maui.Categories;
-using OnScreenSizeMarkup.Maui.Extensions;
-using OnScreenSizeMarkup.Maui.Helpers;
 using OnScreenSizeMarkup.Maui.Providers;
-using ServiceProvider = OnScreenSizeMarkup.Maui.Helpers.ServiceProvider;
 
 namespace OnScreenSizeMarkup.Maui;
 
@@ -24,6 +15,9 @@ namespace OnScreenSizeMarkup.Maui;
 /// </summary>
 [SuppressMessage("Style", "IDE0040:Adicionar modificadores de acessibilidade")]
 [SuppressMessage("ReSharper", "UseStringInterpolation")]
+#if NET9_0_OR_GREATER
+	[RequireService([typeof(IReferenceProvider), typeof(IProvideValueTarget)])]
+#endif
 public class OnScreenSizeExtension : IMarkupExtension<object>
 {
 	static readonly object defaultNull = new();

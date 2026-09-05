@@ -8,26 +8,28 @@
 
 
     <NeutralLanguage>en</NeutralLanguage>
-    <Product>OnScreenSizeMarkup.Maui (net6.0)</Product>
+    <Product>OnScreenSizeMarkup.Maui</Product>
     <Copyright>© Ana Carolina Zambon. All rights reserved.</Copyright>
     <DefineConstants>$(DefineConstants);</DefineConstants>
     <UseFullSemVerForNuGet>false</UseFullSemVerForNuGet>
     <Title>OnScreenSizeMarkup.Maui</Title>
     
     <Product>$(AssemblyName) ($(TargetFramework))</Product>
-    <AssemblyVersion>3.0.0.1</AssemblyVersion>
-    <AssemblyFileVersion>3.0.0.1</AssemblyFileVersion>
-    <Version>3.0.0</Version>
+    <AssemblyVersion>4.0.0.2</AssemblyVersion>
+    <AssemblyFileVersion>4.0.0.2</AssemblyFileVersion>
+    <Version>4.0.2</Version>
     <PackageVersion>$(Version)$(VersionSuffix)</PackageVersion>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <GenerateErrorForMissingTargetingPacks>false</GenerateErrorForMissingTargetingPacks>
     
     <Configurations>Debug;Release</Configurations>
+    <NoWarn>NU1012;NETSDK1202;NETSDK1023;XA5207;NETSDK1135</NoWarn>
   </PropertyGroup>
 
-  
-  
+
   <PropertyGroup>
-    <TargetFrameworks>net6.0</TargetFrameworks>
+<!--    <TargetFrameworks>net9.0;net9.0-android;net9.0-ios</TargetFrameworks>-->
+    <TargetFrameworks>net6.0-android;net6.0-ios;net9.0-android;net9.0-ios</TargetFrameworks>
     <MicrosoftExtensionsVersion>6.0.0</MicrosoftExtensionsVersion>
     <Authors>Ana Carolina Zambon</Authors>
     <Owners>carolzbnbr</Owners>
@@ -49,6 +51,8 @@
   <ItemGroup>
     <None Include="Readme.md" Pack="true" PackagePath="\"/>
   </ItemGroup>
+
+
   
   <PropertyGroup>
     <LangVersion>latest</LangVersion>
